@@ -46,7 +46,7 @@
         }
     </style>
 </head>
-<body class="bg-studio-50 font-sans text-studio-stone selection:bg-studio-200 selection:text-studio-900">
+<body class="bg-white dark:bg-slate-900 transition-colors duration-300"">
 
     <!-- MENÚ DE NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-studio-100 transition-all duration-300">
@@ -427,12 +427,11 @@
 const btnModoOscuro = document.getElementById('btn-modo-oscuro');
 if (btnModoOscuro) {
     btnModoOscuro.onclick = function(e) {
-        e.preventDefault(); 
-        document.documentElement.classList.toggle('dark');
-        const esOscuro = document.documentElement.classList.contains('dark');
-        localStorage.setItem('tema', esOscuro ? 'dark' : 'light');
-        console.log("Modo oscuro cambiado a:", esOscuro ? 'dark' : 'light');
-    };
+    e.preventDefault();
+    alert("¡Funciona!"); // Si sale esto, el problema es que Tailwind no tiene colores definidos.
+    document.documentElement.classList.toggle('dark');
+    // ...
+};
 }
 
 // Cargar preferencia guardada al iniciar
