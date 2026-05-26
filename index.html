@@ -299,7 +299,7 @@
                 <div class="flex flex-wrap gap-2" id="filtros-catalogo">
                     <button class="filtro-btn active px-4 py-2 rounded-full text-sm font-semibold bg-studio-600 text-white transition-all" data-filtro="todos">Todos</button>
                     <button class="filtro-btn px-4 py-2 rounded-full text-sm font-semibold bg-white border border-studio-200 text-studio-700 hover:bg-studio-100 transition-all" data-filtro="clean">Clean Look</button>
-                    <button class="filtro-btn px-4 py-2 rounded-full text-sm font-semibold bg-white border border-studio-200 text-studio-700 hover:bg-studio-100 transition-all" data-filtro="místico">Místico</button>
+                    <button class="filtro-btn px-4 py-2 rounded-full text-sm font-semibold bg-white border border-studio-200 text-studio-700 hover:bg-studio-100 transition-all" data-filtro="mistico">Místico</button>
                     <button class="filtro-btn px-4 py-2 rounded-full text-sm font-semibold bg-white border border-studio-200 text-studio-700 hover:bg-studio-100 transition-all" data-filtro="chrome">Efectos / Chrome</button>
                     <button class="filtro-btn px-4 py-2 rounded-full text-sm font-semibold bg-white border border-studio-200 text-studio-700 hover:bg-studio-100 transition-all" data-filtro="nailart">Nail Art Especial</button>
                 </div>
@@ -596,7 +596,35 @@ await addDoc(collection(db, 'reservas'), {
         });
     }
 
-    // 3. Función para seleccionar el servicio desde el catálogo (Asignada globalmente al navegador)
+    // 3. Filtrado del catálogo
+    const filtrosCatalogo = document.querySelectorAll('.filtro-btn');
+    const tarjetasCatalogo = document.querySelectorAll('.diseno-card');
+
+    if (filtrosCatalogo.length && tarjetasCatalogo.length) {
+        filtrosCatalogo.forEach(boton => {
+            boton.addEventListener('click', () => {
+                const filtro = boton.dataset.filtro;
+
+                filtrosCatalogo.forEach(b => {
+                    b.classList.remove('bg-studio-600', 'text-white');
+                    b.classList.add('bg-white', 'text-studio-700');
+                });
+                boton.classList.add('bg-studio-600', 'text-white');
+                boton.classList.remove('bg-white', 'text-studio-700');
+
+                tarjetasCatalogo.forEach(tarjeta => {
+                    const categoria = tarjeta.dataset.categoria;
+                    if (filtro === 'todos' || filtro === categoria) {
+                        tarjeta.classList.remove('hidden');
+                    } else {
+                        tarjeta.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    }
+
+    // 4. Función para seleccionar el servicio desde el catálogo (Asignada globalmente al navegador)
     window.seleccionarServicio = function(nombreServicioConPrecio) {
         const selectElement = document.getElementById('servicio');
         if (selectElement) {
