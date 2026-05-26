@@ -599,8 +599,7 @@ await addDoc(collection(db, 'reservas'), {
     </script>
 
    <script>
-
-    // 1. Lógica del Menú Móvil (Unificada y segura)
+    // 1. Lógica del Menú Móvil
     const btnMenu = document.getElementById('btn-menu');
     const menuMovil = document.getElementById('menu-movil');
     if (btnMenu && menuMovil) {
@@ -634,14 +633,12 @@ await addDoc(collection(db, 'reservas'), {
         filtrosCatalogo.forEach(boton => {
             boton.addEventListener('click', () => {
                 const filtro = boton.dataset.filtro;
-
                 filtrosCatalogo.forEach(b => {
                     b.classList.remove('bg-studio-600', 'text-white');
                     b.classList.add('bg-white', 'text-studio-700');
                 });
                 boton.classList.add('bg-studio-600', 'text-white');
                 boton.classList.remove('bg-white', 'text-studio-700');
-
                 tarjetasCatalogo.forEach(tarjeta => {
                     const categoria = tarjeta.dataset.categoria;
                     if (filtro === 'todos' || filtro === categoria) {
@@ -654,81 +651,50 @@ await addDoc(collection(db, 'reservas'), {
         });
     }
 
-    // 4. Función para seleccionar el servicio desde el catálogo (Asignada globalmente al navegador)
-    window.seleccionarServicio = function(nombreServicioConPrecio) {
-        const selectElement = document.getElementById('servicio');
-        if (selectElement) {
-            selectElement.value = nombreServicioConPrecio;
-            console.log("Servicio seleccionado correctamente:", nombreServicioConPrecio);
-        } else {
-            console.error("No se encontró el menú desplegable con id='servicio'");
-        }
-    }
+    // 4. Lógica Unificada de WhatsApp
+    window.enviarWhatsApp = function(datosPersonalizados = null) {
+        const d = datosPersonalizados || {
+            nombre: document.getElementById('nombre')?.value || "Cliente",
+            servicio: document.getElementById('servicio')?.value || "No seleccionado",
+            hora: document.getElementById('hora-seleccionada')?.value || "No seleccionada",
+            comentarios: document.getElementById('comentarios')?.value || "Sin comentarios",
+            telefono: "962224745"
+        };
 
+        const mensaje = `📋 *DETALLES DE RESERVA - ANGELES STUDIO*\n\n` +
+                        `👤 *Nombre:* ${d.nombre}\n` +
+                        `💅 *Servicio:* ${d.servicio}\n` +
+                        `🕒 *Hora:* ${d.hora}\n` +
+                        `💬 *Comentarios:* ${d.comentarios}\n\n` +
+                        `✨ Por favor confirmar disponibilidad`;
+
+        const url = `https://wa.me/51${d.telefono}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
+    };
+
+    window.cerrarModalExito = function() {
+        const modal = document.getElementById('modal-exito');
+        if (modal) modal.classList.add('hidden');
+        if (window.datosWhatsApp) {
+            window.enviarWhatsApp(window.datosWhatsApp);
+        }
+    };
+
+    // 5. Modo Oscuro
     window.toggleTheme = function() {
-        const html = document.documentElement;
-        const isDark = html.classList.toggle('dark-mode');
-        try {
-            localStorage.setItem('angeles-theme', isDark ? 'dark' : 'light');
-        } catch (e) { }
+        const isDark = document.documentElement.classList.toggle('dark-mode');
+        localStorage.setItem('angeles-theme', isDark ? 'dark' : 'light');
         const icon = document.getElementById('theme-mode-icon');
         if (icon) {
             icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-            if (typeof lucide !== 'undefined') {
-                lucide.replace();
-            }
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
     }
 
-    window.loadTheme = function() {
-        try {
-            const savedTheme = localStorage.getItem('angeles-theme');
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-            }
-        } catch (e) { }
-    }
-    
-    // 4. Inicializar Iconos de Lucide al cargar la página
     window.onload = function() {
-        loadTheme();
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
+        if (localStorage.getItem('angeles-theme') === 'dark') document.documentElement.classList.add('dark-mode');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
-
-    window.enviarWhatsApp = function(datosPersonalizados = null) {
-    // Si pasamos datos (del modal), usamos esos; si no, leemos del formulario
-    const d = datosPersonalizados || {
-        nombre: document.getElementById('nombre')?.value || "Cliente",
-        servicio: document.getElementById('servicio')?.value || "No seleccionado",
-        hora: document.getElementById('hora-seleccionada')?.value || "No seleccionada",
-        comentarios: document.getElementById('comentarios')?.value || "Sin comentarios",
-        telefono: "962224745" // Tu número aquí
-    };
-
-    const mensaje = `✨ *Detalles de Reserva - Angeles Studio*\n\n` +
-                    `👤 *Nombre:* ${d.nombre}\n` +
-                    `💅 *Servicio:* ${d.servicio}\n` +
-                    `🕒 *Hora:* ${d.hora}\n` +
-                    `💬 *Comentarios:* ${d.comentarios || 'Sin comentarios'}\n\n` +
-                    `¡Esperamos verte pronto!`;
-
-    // encodeURIComponent convierte los \n en los códigos necesarios para la URL
-    const url = `https://wa.me/51${d.telefono}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, '_blank');
-};
-
-window.cerrarModalExito = function() {
-    const modal = document.getElementById('modal-exito');
-    if (modal) modal.classList.add('hidden');
-    
-    // Ejecuta la función unificada con los datos guardados
-    if (window.datosWhatsApp) {
-        window.enviarWhatsApp(window.datosWhatsApp);
-    }
-};
-
 </script>
 
 
