@@ -121,7 +121,7 @@
                             <p class="text-xs text-studio-700 mt-1">Efecto ojo de gato magnético con apliques estelares metálicos.</p>
                         </div>
                     </div>
-                    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 cursor-pointer">
+                    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 cursor-pointer z-50">
     <i data-lucide="moon" class="w-8 h-8"></i>
 </div>
                 </div>
@@ -412,18 +412,22 @@
         });
     });
 
-    // 3. Lógica del Modo Oscuro
-    const btnModoOscuro = document.getElementById('btn-modo-oscuro');
-    if (btnModoOscuro) {
-        btnModoOscuro.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('tema', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        });
-    }
-    // Cargar preferencia guardada
-    if (localStorage.getItem('tema') === 'dark') {
-        document.documentElement.classList.add('dark');
-    }
+    // 3. Lógica del Modo Oscuro (Versión mejorada)
+const btnModoOscuro = document.getElementById('btn-modo-oscuro');
+if (btnModoOscuro) {
+    btnModoOscuro.onclick = function(e) {
+        e.preventDefault(); 
+        document.documentElement.classList.toggle('dark');
+        const esOscuro = document.documentElement.classList.contains('dark');
+        localStorage.setItem('tema', esOscuro ? 'dark' : 'light');
+        console.log("Modo oscuro cambiado a:", esOscuro ? 'dark' : 'light');
+    };
+}
+
+// Cargar preferencia guardada al iniciar
+if (localStorage.getItem('tema') === 'dark') {
+    document.documentElement.classList.add('dark');
+}
 
     // 4. Lógica de Horarios
     const horasLayout = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
