@@ -39,10 +39,79 @@
         }
     </script>
     <style>
+        :root {
+            --bg: #fdf6f6;
+            --surface: #ffffff;
+            --surface-strong: #f7f0ef;
+            --text: #1e1b1b;
+            --text-muted: #6d3633;
+            --border: #f7dcdb;
+            --accent: #ba5e59;
+            --accent-strong: #823e3a;
+            --muted: #f7dcdb;
+            --shadow: rgba(109,54,51,0.08);
+            --selection-bg: #efc1be;
+            --selection-text: #1e1b1b;
+            --surface-rgb: 255,255,255;
+        }
+        :root.dark-mode {
+            --bg: #1c1a1c;
+            --surface: #2a2528;
+            --surface-strong: #342e32;
+            --text: #f4ece9;
+            --text-muted: #c9b7b3;
+            --border: #3d343a;
+            --accent: #b47a75;
+            --accent-strong: #d4af37;
+            --muted: #483d42;
+            --shadow: rgba(0,0,0,0.25);
+            --selection-bg: #5a4a52;
+            --selection-text: #f4ece9;
+            --surface-rgb: 42,37,40;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+        body::selection {
+            background-color: var(--selection-bg);
+            color: var(--selection-text);
+        }
+        nav, section, footer, .bg-white, .bg-studio-50, .bg-studio-100, .bg-studio-200 {
+            background-color: var(--surface) !important;
+            color: var(--text) !important;
+        }
         .glass {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(var(--surface-rgb), 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+        }
+        .border-studio-100 {
+            border-color: var(--border) !important;
+        }
+        .text-studio-stone, .text-studio-900, .text-studio-800, .text-studio-700, .text-studio-600, .text-studio-500 {
+            color: var(--text) !important;
+        }
+        .text-studio-600:hover {
+            color: var(--accent-strong) !important;
+        }
+        .bg-studio-600 {
+            background-color: var(--accent) !important;
+        }
+        .bg-studio-700 {
+            background-color: var(--accent-strong) !important;
+        }
+        .shadow-2xl, .shadow-xl, .shadow-md, .shadow-sm {
+            box-shadow: 0 10px 30px var(--shadow) !important;
+        }
+        .btn-hora, .filtro-btn, select, input, textarea {
+            background-color: var(--surface) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
+        }
+        .filtro-btn.active {
+            background-color: var(--accent) !important;
+            color: #ffffff !important;
         }
     </style>
     
@@ -130,9 +199,9 @@
                             <p class="text-xs text-studio-700 mt-1">Efecto ojo de gato magnético con apliques estelares metálicos.</p>
                         </div>
                     </div>
-                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 animate-bounce">
-                        <i data-lucide="moon" class="w-8 h-8"></i>
-                    </div>
+                    <button id="btn-toggle-theme" type="button" onclick="toggleTheme()" class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 animate-bounce transition-transform duration-200 hover:-translate-y-0.5" aria-label="Cambiar tema">
+                        <i id="theme-mode-icon" data-lucide="moon" class="w-8 h-8"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -489,9 +558,34 @@ await addDoc(collection(db, 'reservas'), {
             console.error("No se encontró el menú desplegable con id='servicio'");
         }
     }
+
+    window.toggleTheme = function() {
+        const html = document.documentElement;
+        const isDark = html.classList.toggle('dark-mode');
+        try {
+            localStorage.setItem('angeles-theme', isDark ? 'dark' : 'light');
+        } catch (e) { }
+        const icon = document.getElementById('theme-mode-icon');
+        if (icon) {
+            icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            if (typeof lucide !== 'undefined') {
+                lucide.replace();
+            }
+        }
+    }
+
+    window.loadTheme = function() {
+        try {
+            const savedTheme = localStorage.getItem('angeles-theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) { }
+    }
     
     // 4. Inicializar Iconos de Lucide al cargar la página
     window.onload = function() {
+        loadTheme();
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
