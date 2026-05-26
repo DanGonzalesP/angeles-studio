@@ -69,8 +69,8 @@
 </div>
                 <!-- Botón Menú Móvil -->
                 <div class="md:hidden">
-                    <button id="btn-menu" class="text-studio-800 p-2 focus:outline-none">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    <button id="btn-menu" class="md:hidden text-studio-900">
+    <i data-lucide="menu" class="w-8 h-8"></i>
                     </button>
                 </div>
             </div>
@@ -512,5 +512,14 @@ await addDoc(collection(db, 'reservas'), {
             lucide.createIcons();
         }
     </script>
+    <script>
+    const btnMenu = document.getElementById('btn-menu');
+    const menuMovil = document.getElementById('menu-movil');
+
+    btnMenu.addEventListener('click', () => {
+        // Esto alterna la clase 'hidden' para mostrar u ocultar
+        menuMovil.classList.toggle('hidden');
+    });
+</script>
 </body>
 </html>
