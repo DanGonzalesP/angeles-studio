@@ -696,9 +696,9 @@
         const icon = document.getElementById('theme-mode-icon');
         if (icon) {
             icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-            if (typeof lucide !== 'undefined') {
-                lucide.replace();
-            }
+if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+}
         }
     }
 
