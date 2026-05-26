@@ -123,8 +123,8 @@
             <p class="text-xs text-studio-700 mt-1">Efecto ojo de gato magnético con apliques estelares metálicos.</p>
         </div>
 
-        <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 cursor-pointer z-[9999] hover:scale-110 transition-transform">
-    <i data-lucide="moon" class="w-8 h-8 pointer-events-none"></i>
+        <div id="btn-modo-oscuro" class="absolute top-4 right-4 z-50 p-3 bg-white rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform">
+    <i data-lucide="moon" class="w-6 h-6 text-studio-600"></i>
 </div>
     </div>
 </div>
@@ -388,15 +388,17 @@
     <!-- SDK DE FIREBASE (CONEXIÓN CON LA NUBE) -->
 
 <script>
-  // Esto le dice a Tailwind que busque la clase 'dark' en el elemento <html>
-  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
-</script>
+    // 0. Configuración global modo oscuro
+    const aplicarTema = (esOscuro) => {
+        document.documentElement.classList.toggle('dark', esOscuro);
+        localStorage.setItem('tema', esOscuro ? 'dark' : 'light');
+    };
 
-    <script>
+    // Aplicar al cargar
+    if (localStorage.getItem('tema') === 'dark' || (!('tema' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        aplicarTema(true);
+    }
+
     // 1. Lógica del Menú Móvil
     const btnMenu = document.getElementById('btn-menu');
     const menuMovil = document.getElementById('menu-movil');
@@ -416,31 +418,19 @@
 
             const cat = btn.getAttribute('data-filtro');
             document.querySelectorAll('.diseno-card').forEach(c => { 
-                if(cat === 'todos' || c.getAttribute('data-categoria') === cat) {
-                    c.classList.remove('hidden');
-                } else {
-                    c.classList.add('hidden');
-                } 
+                c.classList.toggle('hidden', cat !== 'todos' && c.getAttribute('data-categoria') !== cat);
             });
         });
     });
 
-    // 3. Lógica del Modo Oscuro (Versión mejorada)
-const btnModoOscuro = document.getElementById('btn-modo-oscuro');
-if (btnModoOscuro) {
-    // ... dentro de tu script ...
-btnModoOscuro.onclick = function(e) {
-    e.preventDefault();
-    // alert("¡Funciona!"); <- ELIMINADO
-    document.documentElement.classList.toggle('dark');
-    // ... resto del código ...
-};
-}
-
-// Cargar preferencia guardada al iniciar
-if (localStorage.getItem('tema') === 'dark') {
-    document.documentElement.classList.add('dark');
-}
+    // 3. Lógica del Modo Oscuro
+    const btnModoOscuro = document.getElementById('btn-modo-oscuro');
+    if (btnModoOscuro) {
+        btnModoOscuro.onclick = function(e) {
+            e.preventDefault();
+            aplicarTema(!document.documentElement.classList.contains('dark'));
+        };
+    }
 
     // 4. Lógica de Horarios
     const horasLayout = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
@@ -455,16 +445,14 @@ if (localStorage.getItem('tema') === 'dark') {
             b.onclick = () => {
                 document.querySelectorAll('.btn-hora').forEach(x => { x.classList.remove('bg-studio-600', 'text-white'); x.classList.add('bg-white', 'text-studio-700'); });
                 b.classList.add('bg-studio-600', 'text-white'); b.classList.remove('bg-white', 'text-studio-700');
-                inputHoraLayout.value = h;
+                if(inputHoraLayout) inputHoraLayout.value = h;
             };
             contenedorHorasLayout.appendChild(b);
         });
     }
 
     // 5. Inicializar Iconos
-    window.onload = function() {
-        lucide.createIcons();
-    }
+    window.onload = () => lucide.createIcons();
 </script>
 
 
