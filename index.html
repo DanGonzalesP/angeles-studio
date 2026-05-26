@@ -557,30 +557,33 @@
             try {
                 // Ruta corregida: simple y directa
 await addDoc(collection(db, 'reservas'), {
-    nombre,
-    telefono,
-    servicio,
-    fecha,
-    hora,
-    comentarios,
-    estado: 'pendiente',
-    createdAt: new Date().toISOString()
-});
+            nombre,
+            telefono,
+            servicio,
+            fecha,
+            hora,
+            comentarios,
+            estado: 'pendiente',
+            createdAt: new Date().toISOString()
+        });
 
+        // Mensaje limpio sin frases redundantes al final
         const mensajeWhatsApp = `📋 *DETALLES DE RESERVA - ANGELES STUDIO*\n\n` +
                                 `👤 *Nombre:* ${nombre}\n` +
                                 `💅 *Servicio:* ${servicio}\n` +
                                 `📅 *Fecha:* ${fecha}\n` +
                                 `🕒 *Hora:* ${hora}\n` +
-                                `💬 *Comentarios:* ${comentarios || 'Sin comentarios'}\n\n` +
-                                `✨ Por favor confirmar disponibilidad`;
-
+                                `💬 *Comentarios:* ${comentarios || 'Sin comentarios'}`;
+                                
         const url = `https://wa.me/51962224745?text=${encodeURIComponent(mensajeWhatsApp)}`;
         window.open(url, '_blank');
 
+        // Muestra la alerta de éxito y cierra el modal para desbloquear la pantalla
         mostrarAlertaExito();
-            } catch (e) { mostrarAlertaError("Error de conexión."); }
-        };
+        const modalExito = document.getElementById('modal-exito'); // Asegura que coincida con tu ID del modal
+        if (modalExito) {
+            modalExito.classList.add('hidden');
+        }
 
         window.mostrarAlertaExito = function() {
             const modal = document.getElementById('modal-exito');
