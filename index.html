@@ -380,7 +380,6 @@
         </div>
     </section>
 
-    <!-- FORMULARIO DE RESERVAS CON REDIRECCIÓN A WHATSAPP -->
     <section id="reserva" class="py-20 bg-studio-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
@@ -552,16 +551,20 @@
 
             try {
                 // Ruta corregida: simple y directa
-await addDoc(collection(db, 'reservas'), {
-    nombre, 
-    telefono, 
-    servicio, 
-    fecha, 
-    hora, 
-    comentarios, 
-    estado: 'pendiente', 
-    createdAt: new Date().toISOString()
-});
+// Creamos un identificador único con Nombre-Teléfono (ej: Maria-987654321)
+        const idReserva = `${nombre.trim().replace(/\s+/g, '_')}-${telefono}`;
+
+        // Guardamos la reserva usando el ID personalizado en lugar del código aleatorio
+        await setDoc(doc(db, 'reservas', idReserva), {
+            nombre,
+            telefono,
+            servicio,
+            fecha,
+            hora,
+            comentarios,
+            estado: 'pendiente',
+            createdAt: new Date().toISOString()
+        });
                 window.datosWhatsApp = { nombre, telefono, servicio, fecha, hora, comentarios };
                 mostrarAlertaExito();
             } catch (e) { mostrarAlertaError("Error de conexión."); }
