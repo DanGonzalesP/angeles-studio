@@ -123,9 +123,9 @@
             <p class="text-xs text-studio-700 mt-1">Efecto ojo de gato magnético con apliques estelares metálicos.</p>
         </div>
 
-        <div id="btn-modo-oscuro" class="absolute top-4 right-4 w-12 h-12 bg-white shadow-lg flex items-center justify-center text-studio-600 rounded-full cursor-pointer z-[9999] hover:scale-110 transition-transform">
-            <i data-lucide="moon" class="w-6 h-6 pointer-events-none"></i>
-        </div>
+        <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 cursor-pointer z-[9999] hover:scale-110 transition-transform">
+    <i data-lucide="moon" class="w-8 h-8 pointer-events-none"></i>
+</div>
     </div>
 </div>
             </div>
@@ -428,11 +428,12 @@
     // 3. Lógica del Modo Oscuro (Versión mejorada)
 const btnModoOscuro = document.getElementById('btn-modo-oscuro');
 if (btnModoOscuro) {
-    btnModoOscuro.onclick = function(e) {
+    // ... dentro de tu script ...
+btnModoOscuro.onclick = function(e) {
     e.preventDefault();
-    alert("¡Funciona!"); // Si sale esto, el problema es que Tailwind no tiene colores definidos.
+    // alert("¡Funciona!"); <- ELIMINADO
     document.documentElement.classList.toggle('dark');
-    // ...
+    // ... resto del código ...
 };
 }
 
