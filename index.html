@@ -45,6 +45,13 @@
             -webkit-backdrop-filter: blur(12px);
         }
     </style>
+
+    <script>
+  tailwind.config = {
+    darkMode: 'class'
+  }
+</script>
+
 </head>
 <body class="bg-white dark:bg-slate-900 transition-colors duration-300">
 
@@ -121,9 +128,9 @@
         </div>
     </div>
 
-    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 z-[9999] w-14 h-14 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300">
-        <i data-lucide="moon" class="w-7 h-7 text-studio-600 dark:text-white pointer-events-none"></i>
-    </div>
+    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 z-[9999] w-14 h-14 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300">
+    <i data-lucide="moon" class="w-7 h-7 text-studio-600 dark:text-white pointer-events-none"></i>
+</div>
 </div>
 </div>
             </div>
