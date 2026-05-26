@@ -574,19 +574,19 @@ await addDoc(collection(db, 'reservas'), {
             }
         };
 
-        window.cerrarModalExito = function() {
+       window.cerrarModalExito = function() {
     const modal = document.getElementById('modal-exito');
     if (modal) modal.classList.add('hidden');
     const datos = window.datosWhatsApp || {};
 
     const lineas = [
-        "\uD83D\uDCCB *DETALLES DE RESERVA - ANGELES STUDIO*",
+        "✅ *DETALLES DE RESERVA - ANGELES STUDIO*",
         "",
-        "\uD83D\uDC64 *Nombre:* " + (datos.nombre || ''),
-        "\uD83D\uDC85 *Servicio:* " + (datos.servicio || ''),
-        "\uD83D\uDCC5 *Fecha:* " + (datos.fecha || ''),
-        "\uD83D\uDD52 *Hora:* " + (datos.hora || ''),
-        "\uD83D\uDCAC *Comentarios:* " + (datos.comentarios || 'Sin comentarios')
+        "* Nombre:* " + (datos.nombre || ''),
+        "* Servicio:* " + (datos.servicio || ''),
+        "* Fecha:* " + (datos.fecha || ''),
+        "* Hora:* " + (datos.hora || ''),
+        "* Comentarios:* " + (datos.comentarios || 'Sin comentarios')
     ];
 
     const mensaje = lineas.join("\n");
