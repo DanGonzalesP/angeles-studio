@@ -383,74 +383,36 @@
     </footer>
 
     <!-- SDK DE FIREBASE (CONEXIÓN CON LA NUBE) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-  apiKey: "AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U",
-  authDomain: "angeles-studio-66873.firebaseapp.com",
-  projectId: "angeles-studio-66873",
-  storageBucket: "angeles-studio-66873.firebasestorage.app",
-  messagingSenderId: "274123676470",
-  appId: "1:274123676470:web:f5736b02bbf641f6be3197",
-  measurementId: "G-PZ2X5BGW5N"
-};
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (e) { console.error(e); }
-        }
-        initAuth();
-
-        window.enviarReserva = async function(event) {
-            event.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const telefono = document.getElementById('telefono').value;
-            const servicio = document.getElementById('servicio').value;
-            const fecha = document.getElementById('fecha').value;
-            const hora = document.getElementById('hora-seleccionada').value;
-            const comentarios = document.getElementById('comentarios').value;
-
-            if (!hora) { mostrarAlertaError("Selecciona una hora."); return; }
-
-            try {
-                // Ruta corregida: simple y directa
-await addDoc(collection(db, 'reservas'), {
-    nombre, 
-    telefono, 
-    servicio, 
-    fecha, 
-    hora, 
-    comentarios, 
-    estado: 'pendiente', 
-    createdAt: new Date().toISOString()
-});
-                window.datosWhatsApp = { nombre, telefono, servicio, fecha, hora, comentarios };
-                mostrarAlertaExito();
-            } catch (e) { mostrarAlertaError("Error de conexión."); }
-        };
-    </script>
-
-   <script>
-    // 1. Lógica del Menú Móvil (Unificada y segura)
+    <script>
+    // 1. Lógica del Menú Móvil
     const btnMenu = document.getElementById('btn-menu');
     const menuMovil = document.getElementById('menu-movil');
     if (btnMenu && menuMovil) {
         btnMenu.addEventListener('click', () => menuMovil.classList.toggle('hidden'));
     }
 
-    // 2. Lógica de Horarios
+    // 2. Lógica del Filtro de Catálogo (Esto es lo que faltaba)
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filtro-btn').forEach(b => { 
+                b.classList.remove('bg-studio-600', 'text-white'); 
+                b.classList.add('bg-white', 'text-studio-700'); 
+            });
+            btn.classList.add('bg-studio-600', 'text-white'); 
+            btn.classList.remove('bg-white', 'text-studio-700');
+
+            const cat = btn.getAttribute('data-filtro');
+            document.querySelectorAll('.diseno-card').forEach(c => { 
+                if(cat === 'todos' || c.getAttribute('data-categoria') === cat) {
+                    c.classList.remove('hidden');
+                } else {
+                    c.classList.add('hidden');
+                } 
+            });
+        });
+    });
+
+    // 3. Lógica de Horarios
     const horasLayout = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
     const contenedorHorasLayout = document.getElementById('bloques-hora');
     const inputHoraLayout = document.getElementById('hora-seleccionada');
@@ -469,9 +431,7 @@ await addDoc(collection(db, 'reservas'), {
         });
     }
 
-    // ... (Mantén aquí el resto de tus funciones: seleccionarServicio, filtro, modales, etc.)
-    
-    // Finalizar con Lucide
+    // 4. Lucide Icons
     window.onload = function() {
         lucide.createIcons();
     }
