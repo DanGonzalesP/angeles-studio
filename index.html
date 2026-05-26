@@ -112,20 +112,17 @@
                 </div>
                 <div class="lg:col-span-5 flex justify-center relative">
     <div class="relative w-80 h-[450px] sm:w-[350px] sm:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white transform hover:rotate-2 transition-transform duration-500">
-        
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=600');"></div>
-        
         <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent"></div>
-        
         <div class="absolute bottom-6 left-6 right-6 p-4 glass rounded-2xl border border-white/20 bg-white/80 backdrop-blur-sm">
             <p class="text-xs font-semibold text-studio-500 uppercase tracking-widest">Insignia del Mes</p>
             <h3 class="font-serif text-lg text-studio-900 font-bold">Astro Nails (Lunas & Estrellas)</h3>
             <p class="text-xs text-studio-700 mt-1">Efecto ojo de gato magnético con apliques estelares metálicos.</p>
         </div>
+    </div>
 
-        <div id="btn-modo-oscuro" class="absolute top-4 right-4 z-[9999] p-3 bg-white dark:bg-slate-800 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-all duration-300">
-            <i data-lucide="moon" class="w-6 h-6 text-studio-600 dark:text-white pointer-events-none"></i>
-        </div>
+    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 z-[9999] w-14 h-14 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300">
+        <i data-lucide="moon" class="w-7 h-7 text-studio-600 dark:text-white pointer-events-none"></i>
     </div>
 </div>
 </div>
@@ -400,7 +397,7 @@
         }
     };
 
-    // Aplicar al cargar de forma inmediata
+    // Aplicar preferencia al cargar la página de forma inmediata
     if (localStorage.getItem('tema') === 'dark' || (!('tema' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         aplicarTema(true);
     } else {
@@ -434,7 +431,7 @@
         });
     });
 
-    // 3. Lógica del Modo Oscuro Corregida
+    // 3. Lógica del Modo Oscuro (Uso de addEventListener)
     const btnModoOscuro = document.getElementById('btn-modo-oscuro');
     if (btnModoOscuro) {
         btnModoOscuro.addEventListener('click', (e) => {
