@@ -77,15 +77,14 @@
         </div>
         <!-- Menú Desplegable Móvil -->
         <div id="menu-movil" class="hidden md:hidden border-t border-studio-100 bg-white">
-            <div class="hidden md:flex items-center space-x-8">
-    <a href="#inicio" class="text-studio-700 hover:text-studio-900 font-medium transition-colors">Inicio</a>
-    <a href="#catalogo" class="text-studio-700 hover:text-studio-900 font-medium transition-colors">Catálogo</a>
-    <a href="#resenas" class="text-studio-700 hover:text-studio-900 font-medium transition-colors">Reseñas</a>
-    <a href="#nosotros" class="text-studio-700 hover:text-studio-900 font-medium transition-colors">Ubicación</a>
-    
-    <a href="#reserva" class="bg-studio-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-studio-700 transition-all duration-300 shadow-sm">Agendar Cita</a>
+    <div class="flex flex-col items-center space-y-4 py-4">
+        <a href="#inicio" class="text-studio-700 font-medium">Inicio</a>
+        <a href="#catalogo" class="text-studio-700 font-medium">Catálogo</a>
+        <a href="#resenas" class="text-studio-700 font-medium">Reseñas</a>
+        <a href="#nosotros" class="text-studio-700 font-medium">Ubicación</a>
+        <a href="#reserva" class="bg-studio-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-studio-700">Agendar Cita</a>
+    </div>
 </div>
-        </div>
     </nav>
 
     <!-- SECCIÓN INICIO / HERO -->
@@ -444,16 +443,20 @@ await addDoc(collection(db, 'reservas'), {
         };
     </script>
 
-    <!-- FUNCIONES LOGICAS DEL SITIO (CONTROLES DE LA INTERFAZ) -->
-    <script>
-        const btnMenu = document.getElementById('btn-menu');
-        const menuMovil = document.getElementById('menu-movil');
+   <script>
+    // 1. Lógica del Menú Móvil (Unificada y segura)
+    const btnMenu = document.getElementById('btn-menu');
+    const menuMovil = document.getElementById('menu-movil');
+    if (btnMenu && menuMovil) {
         btnMenu.addEventListener('click', () => menuMovil.classList.toggle('hidden'));
+    }
 
-        const horasLayout = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
-        const contenedorHorasLayout = document.getElementById('bloques-hora');
-        const inputHoraLayout = document.getElementById('hora-seleccionada');
+    // 2. Lógica de Horarios
+    const horasLayout = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
+    const contenedorHorasLayout = document.getElementById('bloques-hora');
+    const inputHoraLayout = document.getElementById('hora-seleccionada');
 
+    if (contenedorHorasLayout) {
         horasLayout.forEach(h => {
             const b = document.createElement('button');
             b.type = "button"; b.textContent = h;
@@ -465,61 +468,15 @@ await addDoc(collection(db, 'reservas'), {
             };
             contenedorHorasLayout.appendChild(b);
         });
+    }
 
-        function seleccionarServicio(s) {
-            const sel = document.getElementById('servicio');
-            for(let i=0; i<sel.options.length; i++) { if(sel.options[i].value.includes(s)) { sel.selectedIndex = i; break; } }
-        }
-
-        document.querySelectorAll('.filtro-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filtro-btn').forEach(b => { b.classList.remove('bg-studio-600', 'text-white'); b.classList.add('bg-white', 'text-studio-700'); });
-                btn.classList.add('bg-studio-600', 'text-white'); btn.classList.remove('bg-white', 'text-studio-700');
-                const cat = btn.getAttribute('data-filtro');
-                document.querySelectorAll('.diseno-card').forEach(c => { if(cat==='todos' || c.getAttribute('data-categoria')===cat) c.classList.remove('hidden'); else c.classList.add('hidden'); });
-            });
-        });
-
-        document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
-        
-        function mostrarAlertaExito() { 
-            document.getElementById('modal-exito').classList.remove('hidden'); 
-        }
-        
-        function mostrarAlertaError(m) { 
-            document.getElementById('error-mensaje-texto').textContent = m; 
-            document.getElementById('modal-error').classList.remove('hidden'); 
-        }
-        
-        function cerrarModalError() { 
-            document.getElementById('modal-error').classList.add('hidden'); 
-        }
-
-        function cerrarModalExito() {
-            document.getElementById('modal-exito').classList.add('hidden');
-            if (window.datosWhatsApp) {
-                const { nombre, telefono, servicio, fecha, hora, comentarios } = window.datosWhatsApp;
-                const txt = `¡Hola Angeles Studio! ✨ Deseo reservar una cita.\n\n📋 *Detalles de Reserva:*\n• *Cliente:* ${nombre}\n• *Celular:* ${telefono}\n• *Servicio:* ${servicio}\n• *Fecha:* ${fecha}\n• *Horario:* ${hora}\n${comentarios?`• *Notas:* ${comentarios}`:''}`;
-                window.open(`https://api.whatsapp.com/send?phone=51962224745&text=${encodeURIComponent(txt)}`, '_blank');
-                document.getElementById('form-reserva').reset();
-                inputHoraLayout.value = "";
-                window.datosWhatsApp = null;
-            }
-        }
-        
-        // Inicializar iconos de Lucide al cargar la interfaz
-        window.onload = function() {
-            lucide.createIcons();
-        }
-    </script>
-    <script>
-    const btnMenu = document.getElementById('btn-menu');
-    const menuMovil = document.getElementById('menu-movil');
-
-    btnMenu.addEventListener('click', () => {
-        // Esto alterna la clase 'hidden' para mostrar u ocultar
-        menuMovil.classList.toggle('hidden');
-    });
+    // ... (Mantén aquí el resto de tus funciones: seleccionarServicio, filtro, modales, etc.)
+    
+    // Finalizar con Lucide
+    window.onload = function() {
+        lucide.createIcons();
+    }
 </script>
+
 </body>
 </html>
