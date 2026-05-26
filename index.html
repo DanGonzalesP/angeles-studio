@@ -578,6 +578,7 @@ await addDoc(collection(db, 'reservas'), {
             }
         };
 
+
         window.mostrarAlertaError = function(mensaje) {
             const modal = document.getElementById('modal-error');
             const textoError = document.getElementById('error-mensaje-texto');
@@ -696,24 +697,37 @@ await addDoc(collection(db, 'reservas'), {
         }
     }
 
-window.enviarWhatsApp = function() {
-    const nombre = document.getElementById('nombre')?.value || "Cliente";
-    const servicio = document.getElementById('servicio')?.value || "No seleccionado";
-    const hora = document.getElementById('hora-seleccionada')?.value || "No seleccionada";
-    const comentarios = document.getElementById('comentarios')?.value || "Sin comentarios";
+    window.enviarWhatsApp = function(datosPersonalizados = null) {
+    // Si pasamos datos (del modal), usamos esos; si no, leemos del formulario
+    const d = datosPersonalizados || {
+        nombre: document.getElementById('nombre')?.value || "Cliente",
+        servicio: document.getElementById('servicio')?.value || "No seleccionado",
+        hora: document.getElementById('hora-seleccionada')?.value || "No seleccionada",
+        comentarios: document.getElementById('comentarios')?.value || "Sin comentarios",
+        telefono: "962224745" // Tu número aquí
+    };
 
-    // Formato con saltos de línea codificados como %0A
-    const mensaje = `✨ *Detalles de Reserva - Angeles Studio*%0A%0A` +
-                    `👤 *Nombre:* ${nombre}%0A` +
-                    `💅 *Servicio:* ${servicio}%0A` +
-                    `🕒 *Hora:* ${hora}%0A` +
-                    `💬 *Comentarios:* ${comentarios}%0A%0A` +
+    const mensaje = `✨ *Detalles de Reserva - Angeles Studio*\n\n` +
+                    `👤 *Nombre:* ${d.nombre}\n` +
+                    `💅 *Servicio:* ${d.servicio}\n` +
+                    `🕒 *Hora:* ${d.hora}\n` +
+                    `💬 *Comentarios:* ${d.comentarios || 'Sin comentarios'}\n\n` +
                     `¡Esperamos verte pronto!`;
 
-    const telefono = "51999999999"; // Reemplaza por tu número real
-    const url = `https://wa.me/${telefono}?text=${mensaje}`;
+    // encodeURIComponent convierte los \n en los códigos necesarios para la URL
+    const url = `https://wa.me/51${d.telefono}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
-}
+};
+
+window.cerrarModalExito = function() {
+    const modal = document.getElementById('modal-exito');
+    if (modal) modal.classList.add('hidden');
+    
+    // Ejecuta la función unificada con los datos guardados
+    if (window.datosWhatsApp) {
+        window.enviarWhatsApp(window.datosWhatsApp);
+    }
+};
 
 </script>
 
