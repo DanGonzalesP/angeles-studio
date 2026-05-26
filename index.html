@@ -91,7 +91,9 @@
     <section id="inicio" class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
         <div class="absolute top-1/4 right-0 w-80 h-80 bg-studio-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
         <div class="absolute bottom-1/4 left-10 w-96 h-96 bg-studio-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-
+<div id="btn-modo-oscuro" class="cursor-pointer">
+    <i data-lucide="moon"></i> 
+</div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
@@ -391,7 +393,7 @@
         btnMenu.addEventListener('click', () => menuMovil.classList.toggle('hidden'));
     }
 
-    // 2. Lógica del Filtro de Catálogo (Esto es lo que faltaba)
+    // 2. Lógica del Filtro de Catálogo
     document.querySelectorAll('.filtro-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filtro-btn').forEach(b => { 
@@ -412,7 +414,20 @@
         });
     });
 
-    // 3. Lógica de Horarios
+    // 3. Lógica del Modo Oscuro
+    const btnModoOscuro = document.getElementById('btn-modo-oscuro');
+    if (btnModoOscuro) {
+        btnModoOscuro.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('tema', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+    }
+    // Cargar preferencia guardada
+    if (localStorage.getItem('tema') === 'dark') {
+        document.documentElement.classList.add('dark');
+    }
+
+    // 4. Lógica de Horarios
     const horasLayout = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
     const contenedorHorasLayout = document.getElementById('bloques-hora');
     const inputHoraLayout = document.getElementById('hora-seleccionada');
@@ -431,7 +446,7 @@
         });
     }
 
-    // 4. Lucide Icons
+    // 5. Inicializar Iconos
     window.onload = function() {
         lucide.createIcons();
     }
