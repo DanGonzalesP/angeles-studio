@@ -714,6 +714,25 @@ await addDoc(collection(db, 'reservas'), {
         }
     }
 
+window.enviarWhatsApp = function() {
+    const nombre = document.getElementById('nombre')?.value || "Cliente";
+    const servicio = document.getElementById('servicio')?.value || "No seleccionado";
+    const hora = document.getElementById('hora-seleccionada')?.value || "No seleccionada";
+    const comentarios = document.getElementById('comentarios')?.value || "Sin comentarios";
+
+    // Formato con saltos de línea codificados como %0A
+    const mensaje = `✨ *Detalles de Reserva - Angeles Studio*%0A%0A` +
+                    `👤 *Nombre:* ${nombre}%0A` +
+                    `💅 *Servicio:* ${servicio}%0A` +
+                    `🕒 *Hora:* ${hora}%0A` +
+                    `💬 *Comentarios:* ${comentarios}%0A%0A` +
+                    `¡Esperamos verte pronto!`;
+
+    const telefono = "51999999999"; // Reemplaza por tu número real
+    const url = `https://wa.me/${telefono}?text=${mensaje}`;
+    window.open(url, '_blank');
+}
+
 </script>
 
 
