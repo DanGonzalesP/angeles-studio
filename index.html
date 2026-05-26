@@ -200,9 +200,9 @@
         <p class="text-sm text-studio-600">Base Cat Eye (Ojo de gato magnético) en tonos mora con apliques metálicos tridimensionales de lunas y estrellas.</p>
         <div class="flex items-center justify-between pt-2">
             <span class="text-xl font-bold text-studio-900">S/. 45.00</span>
-            <a href="#reserva" onclick="seleccionarServicio('Astro Nails (Lunas & Estrellas)')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-                Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            <a href="#reserva" onclick="seleccionarServicio('Astro Nails (Lunas & Estrellas) - S/. 45.00')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
+    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+</a>
         </div>
     </div>
 </div>
@@ -217,9 +217,9 @@
         <p class="text-sm text-studio-600">Manicura corta, impecable y pulida con bases nude de alto brillo translúcido.</p>
         <div class="flex items-center justify-between pt-2">
             <span class="text-xl font-bold text-studio-900">S/. 30.00</span>
-            <a href="#reserva" onclick="seleccionarServicio('Uñas Jabón (Clean Look)')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-                Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            <a href="#reserva" onclick="seleccionarServicio('Uñas Jabón (Clean Look) - S/. 30.00')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
+    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+</a>
         </div>
     </div>
 </div>
@@ -234,9 +234,9 @@
         <p class="text-sm text-studio-600">Esmaltado semipermanente frotado con polvo perla holográfica para un brillo tornasol.</p>
         <div class="flex items-center justify-between pt-2">
             <span class="text-xl font-bold text-studio-900">S/. 40.00</span>
-            <a href="#reserva" onclick="seleccionarServicio('Efecto Aurora Chrome')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-                Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            <a href="#reserva" onclick="seleccionarServicio('Efecto Aurora Chrome - S/. 40.00')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
+    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+</a>
         </div>
     </div>
 </div>
@@ -251,9 +251,9 @@
         <p class="text-sm text-studio-600">Base rosa pastel con diseños de mini lazos pintados a mano alzada y detalles de perlas.</p>
         <div class="flex items-center justify-between pt-2">
             <span class="text-xl font-bold text-studio-900">S/. 50.00</span>
-            <a href="#reserva" onclick="seleccionarServicio('Uñas Coquette Románticas')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-                Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            <a href="#reserva" onclick="seleccionarServicio('Uñas Coquette Románticas - S/. 50.00')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
+    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+</a>
         </div>
     </div>
 </div>
@@ -452,6 +452,7 @@ await addDoc(collection(db, 'reservas'), {
     </script>
 
    <script>
+
     // 1. Lógica del Menú Móvil (Unificada y segura)
     const btnMenu = document.getElementById('btn-menu');
     const menuMovil = document.getElementById('menu-movil');
@@ -478,12 +479,24 @@ await addDoc(collection(db, 'reservas'), {
         });
     }
 
-    // ... (Mantén aquí el resto de tus funciones: seleccionarServicio, filtro, modales, etc.)
-    
-    // Finalizar con Lucide
-    window.onload = function() {
-        lucide.createIcons();
+    // 3. Función para seleccionar el servicio desde el catálogo (Asignada globalmente al navegador)
+    window.seleccionarServicio = function(nombreServicioConPrecio) {
+        const selectElement = document.getElementById('servicio');
+        if (selectElement) {
+            selectElement.value = nombreServicioConPrecio;
+            console.log("Servicio seleccionado correctamente:", nombreServicioConPrecio);
+        } else {
+            console.error("No se encontró el menú desplegable con id='servicio'");
+        }
     }
+    
+    // 4. Inicializar Iconos de Lucide al cargar la página
+    window.onload = function() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+
 </script>
 
 
