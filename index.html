@@ -53,7 +53,7 @@
 </script>
 
 </head>
-<body class="bg-white dark:bg-slate-900 transition-colors duration-300">
+<body class="bg-studio-50 font-sans text-studio-900 dark:bg-slate-900 dark:text-white transition-colors duration-300">
 
     <!-- MENÚ DE NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-studio-100 transition-all duration-300">
@@ -128,9 +128,9 @@
         </div>
     </div>
 
-    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 z-[9999] w-14 h-14 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300">
-    <i data-lucide="moon" class="w-7 h-7 text-studio-600 dark:text-white pointer-events-none"></i>
-</div>
+    <div id="btn-modo-oscuro" class="absolute -top-4 -right-4 z-[9999] w-14 h-14 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300">
+        <i data-lucide="moon" class="w-7 h-7 text-studio-600 dark:text-white pointer-events-none"></i>
+    </div>
 </div>
 </div>
             </div>
@@ -404,8 +404,8 @@
         }
     };
 
-    // Aplicar preferencia al cargar la página de forma inmediata
-    if (localStorage.getItem('tema') === 'dark' || (!('tema' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    // Aplicar preferencia: POR DEFECTO SIEMPRE CLARO, a menos que se haya guardado 'dark'
+    if (localStorage.getItem('tema') === 'dark') {
         aplicarTema(true);
     } else {
         aplicarTema(false);
@@ -438,7 +438,7 @@
         });
     });
 
-    // 3. Lógica del Modo Oscuro (Uso de addEventListener)
+    // 3. Lógica del Modo Oscuro
     const btnModoOscuro = document.getElementById('btn-modo-oscuro');
     if (btnModoOscuro) {
         btnModoOscuro.addEventListener('click', (e) => {
