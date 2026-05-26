@@ -77,10 +77,6 @@
             background-color: var(--selection-bg);
             color: var(--selection-text);
         }
-        nav, section, footer, .bg-white, .bg-studio-50, .bg-studio-100, .bg-studio-200 {
-            background-color: var(--surface) !important;
-            color: var(--text) !important;
-        }
         .glass {
             background: rgba(var(--surface-rgb), 0.85);
             backdrop-filter: blur(12px);
@@ -89,11 +85,45 @@
         .border-studio-100 {
             border-color: var(--border) !important;
         }
-        .text-studio-stone, .text-studio-900, .text-studio-800, .text-studio-700, .text-studio-600, .text-studio-500 {
+        .dark-mode nav,
+        .dark-mode section,
+        .dark-mode footer,
+        .dark-mode .bg-white,
+        .dark-mode .bg-studio-50,
+        .dark-mode .bg-studio-100,
+        .dark-mode .bg-studio-200,
+        .dark-mode .glass {
+            background-color: var(--surface) !important;
             color: var(--text) !important;
         }
-        .text-studio-600:hover {
+        .dark-mode .bg-studio-50 {
+            background-color: var(--surface-strong) !important;
+        }
+        .dark-mode .text-studio-stone,
+        .dark-mode .text-studio-900,
+        .dark-mode .text-studio-800,
+        .dark-mode .text-studio-700,
+        .dark-mode .text-studio-600,
+        .dark-mode .text-studio-500 {
+            color: var(--text) !important;
+        }
+        .dark-mode .text-studio-600:hover {
             color: var(--accent-strong) !important;
+        }
+        .dark-mode .bg-studio-600 {
+            background-color: var(--accent) !important;
+        }
+        .dark-mode .bg-studio-700 {
+            background-color: var(--accent-strong) !important;
+        }
+        .dark-mode .btn-hora,
+        .dark-mode .filtro-btn,
+        .dark-mode select,
+        .dark-mode input,
+        .dark-mode textarea {
+            background-color: var(--surface) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
         }
         .bg-studio-600 {
             background-color: var(--accent) !important;
