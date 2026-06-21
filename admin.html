@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control | Angeles Studio</title>
+    <link rel="icon" type="image/png" href="imagenes/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&family=Playfair+Display:wght=600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        studio: {
+                            50: '#fdf6f6',
+                            100: '#fbebeb',
+                            200: '#f7dcdb',
+                            300: '#efc1be',
+                            400: '#e19d99',
+                            500: '#cf7a75',
+                            600: '#ba5e59',
+                            700: '#9d4a46',
+                            800: '#823e3a',
+                            900: '#6d3633',
+                            stone: '#1e1b1b',
+                            gold: '#d4af37'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-studio-50 font-sans text-studio-stone min-h-screen">
+
+    <div id="vista-login" class="flex flex-col items-center justify-center min-h-screen px-4">
+        <div class="bg-white p-8 rounded-3xl shadow-xl border border-studio-100 max-w-md w-full space-y-6">
+            <div class="text-center flex flex-col">
+                <span class="font-serif text-3xl tracking-widest text-studio-900 font-bold">ANGELES</span>
+                <span class="text-xs tracking-[0.3em] text-studio-500 uppercase -mt-1">Studio Panel</span>
+            </div>
+            
+            <p class="text-sm text-center text-studio-600">Ingresa tus credenciales para administrar las citas y horarios del salón.</p>
+
+            <form id="form-login" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-studio-800 mb-1">Correo Electrónico</label>
+                    <input type="email" id="login-email" placeholder="correo@angelesstudio.com" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-studio-800 mb-1">Contraseña</label>
+                    <input type="password" id="login-password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
+                </div>
+                <button type="submit" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
+                    Iniciar Sesión Real
+                </button>
+            </form>
+
+            <div class="relative flex py-2 items-center">
+                <div class="flex-grow border-t border-studio-200"></div>
+                <span class="flex-shrink mx-4 text-studio-400 text-xs uppercase font-medium">O para desarrollo</span>
+                <div class="flex-grow border-t border-studio-200"></div>
+            </div>
+
+            <button onclick="entrarModoPrueba()" class="w-full bg-studio-stone hover:bg-black text-white font-semibold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                <i data-lucide="eye" class="w-4 h-4 text-studio-gold"></i> Entrar en Modo Prueba (Saltar Login)
+            </button>
+        </div>
+    </div>
+
+
+    <div id="vista-panel" class="hidden min-h-screen flex flex-col">
+        <nav class="bg-white border-b border-studio-100 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl tracking-wider text-studio-900 font-bold">ANGELES STUDIO</span>
+                    <span id="tag-modo" class="text-[10px] text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-md w-max border border-green-200">Panel Administrador</span>
+                </div>
+            </div>
+            <button onclick="cerrarSesionPanel()" class="bg-studio-100 hover:bg-studio-200 text-studio-800 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition">
+                <i data-lucide="log-out" class="w-4 h-4"></i> Cerrar Panel
+            </button>
+        </nav>
+
+        <main class="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-studio-100 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-studio-100 flex items-center justify-center text-studio-600"><i data-lucide="calendar-days"></i></div>
+                    <div>
+                        <p class="text-xs text-studio-500 font-semibold uppercase tracking-wider">Total Reservas</p>
+                        <h3 id="stat-total" class="text-2xl font-bold text-studio-900">0</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-studio-100 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600"><i data-lucide="clock"></i></div>
+                    <div>
+                        <p class="text-xs text-studio-500 font-semibold uppercase tracking-wider">Citas Pendientes</p>
+                        <h3 id="stat-pendientes" class="text-2xl font-bold text-studio-900">0</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-studio-100 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-600"><i data-lucide="check-circle"></i></div>
+                    <div>
+                        <p class="text-xs text-studio-500 font-semibold uppercase tracking-wider">Citas Confirmadas</p>
+                        <h3 id="stat-confirmadas" class="text-2xl font-bold text-studio-900">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-studio-100 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-studio-100 flex items-center justify-between flex-wrap gap-2">
+                    <h2 class="font-serif text-lg text-studio-900 font-bold">Registro General de Citas Virtuales</h2>
+                    <span class="text-xs text-studio-500 bg-studio-50 px-3 py-1 rounded-full border">Actualizado en tiempo real</span>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-studio-50 text-studio-700 text-xs font-bold uppercase border-b border-studio-100">
+                                <th class="p-4">Cliente</th>
+                                <th class="p-4">Servicio Solicitado</th>
+                                <th class="p-4">Fecha y Hora</th>
+                                <th class="p-4">Notas / Comentarios</th>
+                                <th class="p-4 text-center">Estado</th>
+                                <th class="p-4 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-citas-cuerpo" class="divide-y divide-studio-100 text-sm">
+                            <tr>
+                                <td colspan="6" class="p-8 text-center text-studio-400">Conectando con la base de datos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Tu configuración exacta de Firebase sacada de tu index.html
+        const firebaseConfig = {
+            apiKey: "AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U",
+            authDomain: "angeles-studio-66873.firebaseapp.com",
+            projectId: "angeles-studio-66873",
+            storageBucket: "angeles-studio-66873.firebasestorage.app",
+            messagingSenderId: "274123676470",
+            appId: "1:274123676470:web:f5736b02bbf641f6be3197",
+            measurementId: "G-PZ2X5BGW5N"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let desvincularListener = null;
+
+        // Monitorear si el usuario está logueado de verdad por Firebase
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Verificar si tiene el rol en la base de datos
+                try {
+                    const docRef = doc(db, "personal", user.email);
+                    const docSnap = await getDoc(docRef);
+                    
+                    if (docSnap.exists() && (docSnap.data().rol === 'admin' || docSnap.data().rol === 'trabajadora')) {
+                        activarVistaPanel(false); // Entra modo real
+                    } else {
+                        alert("Acceso denegado: Tu correo no está registrado como personal autorizado.");
+                        await signOut(auth);
+                    }
+                } catch (e) {
+                    // Si las reglas de Firebase bloquean la lectura antes de configurar los roles,
+                    // le avisamos pero dejamos que use el modo prueba local para desarrollo.
+                    console.log("Validación de rol omitida o requiere reglas configuradas.");
+                }
+            }
+        });
+
+        // Manejar el formulario de Login Real
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (error) {
+                alert("Error al iniciar sesión: Verifica el correo y contraseña.");
+            }
+        });
+
+        // Función para el Modo de Prueba Temporal
+        window.entrarModoPrueba = function() {
+            activarVistaPanel(true); // Entra en modo de simulación
+        };
+
+        // Cambiar pantallas
+        function activarVistaPanel(esModoPrueba) {
+            document.getElementById('vista-login').classList.add('hidden');
+            document.getElementById('vista-panel').classList.remove('hidden');
+            
+            const tagModo = document.getElementById('tag-modo');
+            if (esModoPrueba) {
+                tagModo.textContent = "Modo de Prueba (Simulado)";
+                tagModo.className = "text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md w-max border border-amber-200";
+                cargarCitasSimuladas();
+            } else {
+                tagModo.textContent = "Conexión en Vivo (Firebase)";
+                tagModo.className = "text-[10px] text-green-600 bg-green-50 px-2 py-0.5 rounded-md w-max border border-green-200";
+                escucharCitasEnVivo();
+            }
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        // Cargar datos en vivo desde la colección 'reservas' de Firestore
+        function escucharCitasEnVivo() {
+            if (desvincularListener) desvincularListener();
+
+            desvincularListener = onSnapshot(collection(db, "reservas"), (snapshot) => {
+                const citas = [];
+                snapshot.forEach((doc) => {
+                    citas.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Ordenar por fecha de creación (las más nuevas arriba)
+                citas.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+                renderizarTabla(citas, false);
+            }, (error) => {
+                console.error("Error cargando base de datos:", error);
+                document.getElementById('tabla-citas-cuerpo').innerHTML = `
+                    <tr>
+                        <td colspan="6" class="p-8 text-center text-red-500 font-semibold">
+                            No se pudieron leer los datos de Firebase. Asegúrate de configurar las "Reglas de Firestore" en tu consola para permitir la lectura, o usa el "Modo de Prueba".
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        // Cargar filas de mentira si entran en Modo Prueba
+        function cargarCitasSimuladas() {
+            const ejemplos = [
+                { id: "Alejandra_Perez-962224745", nombre: "Alejandra Pérez", telefono: "962224745", servicio: "Astro Nails (Lunas & Estrellas)", fecha: "2026-06-25", hora: "03:00 PM", comentarios: "Quiero base color morado oscuro por favor.", estado: "pendiente" },
+                { id: "Mariana_V-987654321", nombre: "Mariana V.", telefono: "987654321", servicio: "Uñas Jabón (Clean Look)", fecha: "2026-06-26", hora: "10:30 AM", comentarios: "Retiro de gel anterior necesario.", estado: "confirmada" },
+                { id: "Lucia_Gomez-955111222", nombre: "Lucía Gómez", telefono: "955111222", servicio: "Efecto Aurora Chrome", fecha: "2026-06-28", hora: "06:00 PM", comentarios: "", estado: "cancelada" }
+            ];
+            renderizarTabla(ejemplos, true);
+        }
+
+        // Pintar la lista en la pantalla
+        function renderizarTabla(citas, esSimulado) {
+            const cuerpo = document.getElementById('tabla-citas-cuerpo');
+            cuerpo.innerHTML = "";
+
+            if (citas.length === 0) {
+                cuerpo.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-studio-400">No hay ninguna reserva registrada aún.</td></tr>`;
+                actualizarContadores(0, 0, 0);
+                return;
+            }
+
+            let pendientes = 0;
+            let confirmadas = 0;
+
+            citas.forEach(cita => {
+                if (cita.estado === 'pendiente') pendientes++;
+                if (cita.estado === 'confirmada') confirmadas++;
+
+                const fila = document.createElement('tr');
+                fila.className = "hover:bg-studio-50/50 transition-colors";
+
+                // Definir colores del estado
+                let claseEstado = "bg-amber-50 text-amber-700 border-amber-200";
+                if (cita.estado === 'confirmada') claseEstado = "bg-green-50 text-green-700 border-green-200";
+                if (cita.estado === 'cancelada') claseEstado = "bg-red-50 text-red-700 border-red-200";
+
+                fila.innerHTML = `
+                    <td class="p-4 font-semibold text-studio-900">
+                        <div class="flex flex-col">
+                            <span>${cita.nombre || 'Sin nombre'}</span>
+                            <a href="https://wa.me/${cita.telefono}" target="_blank" class="text-xs text-studio-500 hover:underline flex items-center gap-0.5 mt-0.5">
+                                <i data-lucide="phone" class="w-3 h-3"></i> ${cita.telefono || ''}
+                            </a>
+                        </div>
+                    </td>
+                    <td class="p-4 text-studio-700 font-medium">${cita.servicio || '-'}</td>
+                    <td class="p-4 text-studio-800">
+                        <div class="flex flex-col">
+                            <span class="font-semibold">${cita.fecha || ''}</span>
+                            <span class="text-xs text-studio-500">${cita.hora || ''}</span>
+                        </div>
+                    </td>
+                    <td class="p-4 text-xs text-studio-600 max-w-xs italic">${cita.comentarios || '<span class="text-studio-300">Ninguno</span>'}</td>
+                    <td class="p-4 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${claseEstado} uppercase tracking-wider">
+                            ${cita.estado}
+                        </span>
+                    </td>
+                    <td class="p-4 text-center">
+                        <select onchange="cambiarEstadoCita('${cita.id}', this.value, ${esSimulado})" class="text-xs bg-white border border-studio-200 rounded-lg p-1.5 focus:outline-none focus:ring-1 focus:ring-studio-500 font-medium">
+                            <option value="pendiente" ${cita.estado === 'pendiente' ? 'selected' : ''}>Marcar Pendiente</option>
+                            <option value="confirmada" ${cita.estado === 'confirmada' ? 'selected' : ''}>Confirmar Cita</option>
+                            <option value="cancelada" ${cita.estado === 'cancelada' ? 'selected' : ''}>Cancelar Cita</option>
+                        </select>
+                    </td>
+                `;
+                cuerpo.appendChild(fila);
+            });
+
+            actualizarContadores(citas.length, pendientes, confirmadas);
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function actualizarContadores(total, pend, conf) {
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-pendientes').textContent = pend;
+            document.getElementById('stat-confirmadas').textContent = conf;
+        }
+
+        // Cambiar estado en base de datos o simulación
+        window.cambiarEstadoCita = async function(id, nuevoEstado, esSimulado) {
+            if (esSimulado) {
+                alert(`[Modo Prueba] Cambiaste el estado de la cita a: ${nuevoEstado.toUpperCase()}.\nEn el modo real, esto se guardará automáticamente en Firebase.`);
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "reservas", id);
+                await updateDoc(docRef, { estado: nuevoEstado });
+            } catch (e) {
+                alert("No tienes permisos suficientes en Firebase para modificar este documento. Revisa tus Reglas de Seguridad en Cloud Firestore.");
+            }
+        };
+
+        // Salir del panel
+        window.cerrarSesionPanel = async function() {
+            if (desvincularListener) desvincularListener();
+            await signOut(auth);
+            document.getElementById('vista-panel').classList.add('hidden');
+            document.getElementById('vista-login').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>
