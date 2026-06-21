@@ -1,0 +1,56 @@
+[debug] [2026-06-21T22:13:30.540Z] ----------------------------------------------------------------------
+[debug] [2026-06-21T22:13:30.542Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Poliguag\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2026-06-21T22:13:30.542Z] CLI Version:   15.19.0
+[debug] [2026-06-21T22:13:30.542Z] Platform:      win32
+[debug] [2026-06-21T22:13:30.542Z] Node Version:  v26.1.0
+[debug] [2026-06-21T22:13:30.543Z] Time:          Sun Jun 21 2026 17:13:30 GMT-0500 (hora estándar de Perú)
+[debug] [2026-06-21T22:13:30.543Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-21T22:13:30.544Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-06-21T22:13:33.288Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-21T22:13:33.289Z] > authorizing via signed-in user (danielgonzales200427@gmail.com)
+[debug] [2026-06-21T22:13:33.289Z] [iam] checking project angeles-studio-66873 for permissions ["firebase.projects.get"]
+[debug] [2026-06-21T22:13:33.290Z] Checked if tokens are valid: false, expires at: 1781560805144
+[debug] [2026-06-21T22:13:33.290Z] Checked if tokens are valid: false, expires at: 1781560805144
+[debug] [2026-06-21T22:13:33.290Z] > refreshing access token with scopes: []
+[debug] [2026-06-21T22:13:33.291Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-21T22:13:33.291Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-21T22:13:33.446Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-06-21T22:13:33.446Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-21T22:13:33.452Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873:testIamPermissions [none]
+[debug] [2026-06-21T22:13:33.452Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873:testIamPermissions  x-goog-user-project=angeles-studio-66873
+[debug] [2026-06-21T22:13:33.452Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2026-06-21T22:13:33.729Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-06-21T22:13:33.729Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-06-21T22:13:34.400Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873:testIamPermissions 200
+[debug] [2026-06-21T22:13:34.400Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2026-06-21T22:13:34.401Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:34.401Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:34.401Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/angeles-studio-66873/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2026-06-21T22:13:34.401Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/angeles-studio-66873/services/cloudresourcemanager.googleapis.com  x-goog-user-project=angeles-studio-66873
+[debug] [2026-06-21T22:13:35.701Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/angeles-studio-66873/services/cloudresourcemanager.googleapis.com 200
+[debug] [2026-06-21T22:13:35.701Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/angeles-studio-66873/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2026-06-21T22:13:35.704Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:35.704Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:35.704Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873 [none]
+[debug] [2026-06-21T22:13:36.001Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873 200
+[debug] [2026-06-21T22:13:36.002Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/angeles-studio-66873 {"projectNumber":"274123676470","projectId":"angeles-studio-66873","lifecycleState":"ACTIVE","name":"Angeles Studio","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-05-26T02:32:48.377Z"}
+[info] 
+[info] === Serving from 'C:\Users\Poliguag\Desktop\Angeles Studio web'...
+[info] 
+[debug] [2026-06-21T22:13:36.005Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:36.005Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:36.005Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/angeles-studio-66873/sites 
+[debug] [2026-06-21T22:13:37.597Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/angeles-studio-66873/sites 200
+[debug] [2026-06-21T22:13:37.597Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/angeles-studio-66873/sites {"sites":[{"name":"projects/angeles-studio-66873/sites/angeles-studio-66873","defaultUrl":"https://angeles-studio-66873.web.app","appId":"1:274123676470:web:f5736b02bbf641f6be3197","type":"DEFAULT_SITE"}]}
+[debug] [2026-06-21T22:13:37.597Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:37.597Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:37.598Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/angeles-studio-66873/webApps/1:274123676470:web:f5736b02bbf641f6be3197/config [none]
+[debug] [2026-06-21T22:13:38.776Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/angeles-studio-66873/webApps/1:274123676470:web:f5736b02bbf641f6be3197/config 200
+[debug] [2026-06-21T22:13:38.776Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/angeles-studio-66873/webApps/1:274123676470:web:f5736b02bbf641f6be3197/config {"projectId":"angeles-studio-66873","appId":"1:274123676470:web:f5736b02bbf641f6be3197","storageBucket":"angeles-studio-66873.firebasestorage.app","apiKey":"AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U","authDomain":"angeles-studio-66873.firebaseapp.com","messagingSenderId":"274123676470","measurementId":"G-PZ2X5BGW5N","projectNumber":"274123676470","version":"2"}
+[debug] [2026-06-21T22:13:38.782Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:38.782Z] Checked if tokens are valid: true, expires at: 1782083612446
+[debug] [2026-06-21T22:13:38.782Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/angeles-studio-66873 [none]
+[debug] [2026-06-21T22:13:39.131Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/angeles-studio-66873 200
+[debug] [2026-06-21T22:13:39.131Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/angeles-studio-66873 {"projectId":"angeles-studio-66873","projectNumber":"274123676470","displayName":"Angeles Studio","name":"projects/angeles-studio-66873","resources":{"hostingSite":"angeles-studio-66873"},"state":"ACTIVE","etag":"1_bf30bfd7-d030-48f4-933a-8b8775b57eb0"}
+[info] +  hosting[angeles-studio-66873]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
