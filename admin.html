@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control | Angeles Studio</title>
+    <title>Angeles Studio | Especialistas en Uñas</title>
     <link rel="icon" type="image/png" href="imagenes/favicon-32x32.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&family=Playfair+Display:wght=600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -37,417 +36,229 @@
             }
         }
     </script>
+    <style>
+        .glass {
+            background: rgba(253, 246, 246, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Estilos para Modo Oscuro Personalizado (Místico) */
+        .dark-mode {
+            --bg-primary: #1e1b1b;
+            --bg-secondary: #2a2525;
+            --text-main: #fdf6f6;
+            --text-muted: #e19d99;
+            --border-color: #3d3535;
+        }
+        .dark-mode body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+        }
+        .dark-mode .glass {
+            background: rgba(30, 27, 27, 0.8);
+            border-color: var(--border-color);
+        }
+        .dark-mode nav span, .dark-mode nav a, .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+            color: var(--text-main) !important;
+        }
+        .dark-mode p, .dark-mode .text-studio-600, .dark-mode .text-studio-700 {
+            color: #efc1be !important;
+        }
+        .dark-mode .bg-white {
+            background-color: var(--bg-secondary) !important;
+            border-color: var(--border-color) !important;
+        }
+        .dark-mode input, .dark-mode select, .dark-mode textarea {
+            background-color: #1e1b1b !important;
+            border-color: #4a3f3f !important;
+            color: white !important;
+        }
+    </style>
 </head>
-<body class="bg-studio-50 font-sans text-studio-stone min-h-screen">
+<body class="bg-studio-50 font-sans text-studio-stone transition-colors duration-300 pt-20">
 
-    <div id="vista-login" class="flex flex-col items-center justify-center min-h-screen px-4">
-        <div class="bg-white p-8 rounded-3xl shadow-xl border border-studio-100 max-w-md w-full space-y-6">
-            <div class="text-center flex flex-col">
-                <span class="font-serif text-3xl tracking-widest text-studio-900 font-bold">ANGELES</span>
-                <span class="text-xs tracking-[0.3em] text-studio-500 uppercase -mt-1">Studio Panel</span>
-            </div>
-            
-            <p class="text-sm text-center text-studio-600">Ingresa tus credenciales para administrar las citas y horarios del salón.</p>
-
-            <form id="form-login" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-studio-800 mb-1">Correo Electrónico</label>
-                    <input type="email" id="login-email" placeholder="correo@angelesstudio.com" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-studio-800 mb-1">Contraseña</label>
-                    <input type="password" id="login-password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
-                </div>
-                <button type="submit" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
-                    Iniciar Sesión Real
-                </button>
-            </form>
-
-            <div class="relative flex py-2 items-center">
-                <div class="flex-grow border-t border-studio-200"></div>
-                <span class="flex-shrink mx-4 text-studio-400 text-xs uppercase font-medium">O para desarrollo</span>
-                <div class="flex-grow border-t border-studio-200"></div>
-            </div>
-
-            <button onclick="entrarModoPrueba()" class="w-full bg-studio-stone hover:bg-black text-white font-semibold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2">
-                <i data-lucide="eye" class="w-4 h-4 text-studio-gold"></i> Entrar en Modo Prueba (Saltar Login)
-            </button>
-        </div>
-    </div>
-
-
-    <div id="vista-panel" class="hidden min-h-screen flex flex-col">
-        <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-studio-100 transition-all duration-300">
+<!-- MENÚ DE NAVEGACIÓN CORREGIDO -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-studio-100 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
                 <div class="flex-shrink-0 flex flex-col">
                     <span class="font-serif text-2xl tracking-widest text-studio-900 font-semibold">ANGELES</span>
                     <span class="text-xs tracking-[0.3em] text-studio-500 uppercase -mt-1">Studio</span>
                 </div>
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="#inicio" class="text-studio-700 hover:text-studio-900 font-medium">Inicio</a>
-                    <a href="#catalogo" class="text-studio-700 hover:text-studio-900 font-medium">Catálogo</a>
-                    <a href="#resenas" class="text-studio-700 hover:text-studio-900 font-medium">Reseñas</a>
-                    <a href="#nosotros" class="text-studio-700 hover:text-studio-900 font-medium">Ubicación</a>
+                <!-- Menú Escritorio y Laptops -->
+                <div class="flex items-center space-x-4">
+                    <a href="#inicio" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Inicio</a>
+                    <a href="#catalogo" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Catálogo</a>
+                    <a href="#resenas" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Reseñas</a>
+                    <a href="#nosotros" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Ubicación</a>
                     
-                    <button onclick="abrirModalAuth()" class="border border-studio-400 text-studio-800 px-4 py-2 rounded-full font-medium hover:bg-studio-100 transition flex items-center gap-2 text-sm">
-                        <i data-lucide="user" class="w-4 h-4"></i> Iniciar Sesión
+                    <!-- Botón Iniciar Sesión Forzado Visible -->
+                    <button onclick="abrirModalAuth()" class="border border-studio-400 text-studio-800 px-3 py-1.5 rounded-full font-medium hover:bg-studio-100 transition flex items-center gap-1.5 text-xs">
+                        <i data-lucide="user" class="w-3.5 h-3.5"></i> Iniciar Sesión
                     </button>
 
-                    <a href="#reserva" class="bg-studio-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-studio-700 transition flex items-center gap-2 text-sm">
-                        <i data-lucide="calendar" class="w-4 h-4"></i> Agendar Cita
+                    <a href="#reserva" class="bg-studio-600 text-white px-4 py-2 rounded-full font-medium hover:bg-studio-700 transition flex items-center gap-1.5 text-xs shadow-md">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Agendar Cita
                     </a>
-                </div>
-                <div class="md:hidden flex items-center gap-2">
-                    <button onclick="abrirModalAuth()" class="text-studio-700 p-1" aria-label="Usuario">
-                        <i data-lucide="user" class="w-6 h-6"></i>
-                    </button>
-                    <button id="btn-menu" class="text-studio-900">
-                        <i data-lucide="menu" class="w-8 h-8"></i>
+
+                    <button onclick="toggleTheme()" class="p-1.5 rounded-full hover:bg-studio-100 transition text-studio-700" aria-label="Cambiar tema">
+                        <i id="theme-mode-icon" data-lucide="moon" class="w-4 h-4"></i>
                     </button>
                 </div>
-            </div>
-        </div>
-        <div id="menu-movil" class="hidden md:hidden border-t border-studio-100 bg-white">
-            <div class="flex flex-col items-center space-y-4 py-4">
-                <a href="#inicio" class="text-studio-700 font-medium">Inicio</a>
-                <a href="#catalogo" class="text-studio-700 font-medium">Catálogo</a>
-                <a href="#resenas" class="text-studio-700 font-medium">Reseñas</a>
-                <a href="#nosotros" class="text-studio-700 font-medium">Ubicación</a>
-                <button onclick="abrirModalAuth()" class="text-studio-700 font-medium border px-4 py-1.5 rounded-full">Mi Cuenta / Ingreso</button>
-                <a href="#reserva" class="bg-studio-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-studio-700">Agendar Cita</a>
             </div>
         </div>
     </nav>
 
-        <main class="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="bg-white p-5 rounded-2xl border border-studio-100 shadow-sm flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-studio-100 flex items-center justify-center text-studio-600"><i data-lucide="calendar-days"></i></div>
+    <section id="inicio" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-12">
+        <div class="flex-1 space-y-6 max-w-xl">
+            <div class="inline-flex items-center gap-2 bg-studio-100 text-studio-800 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase">
+                ✨ Especialistas en Uñas y Tendencias
+            </div>
+            <h1 class="font-serif text-4xl sm:text-6xl text-studio-900 font-bold leading-tight">
+                La magia y elegancia que tus manos <span class="italic font-normal text-studio-600">merecen</span>
+            </h1>
+            <p class="text-studio-700 text-base sm:text-lg leading-relaxed">
+                En Angeles Studio nos especializamos exclusivamente en embellecer tus manos. Acabados impecables, duraderos y las últimas tendencias como el Clean Look y efectos especiales.
+            </p>
+            <div class="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a href="#reserva" class="w-full sm:w-auto bg-studio-600 text-white text-center px-8 py-4 rounded-full font-semibold hover:bg-studio-700 transition shadow-lg tracking-wide">
+                    Reservar mi espacio ahora
+                </a>
+                <a href="https://wa.me/51900000000" target="_blank" class="w-full sm:w-auto flex items-center justify-center gap-2 text-studio-800 font-medium hover:text-studio-600 px-4 py-3 transition">
+                    <i data-lucide="message-circle" class="w-5 h-5 text-green-600"></i> ¿Tienes consultas?
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 relative w-full max-w-md md:max-w-none flex justify-center">
+            <div class="absolute inset-0 bg-studio-200 rounded-[40px] rotate-3 scale-95 opacity-50 blur-sm"></div>
+            <div class="relative bg-white p-4 rounded-[40px] shadow-xl border border-studio-100 max-w-sm overflow-hidden">
+                <img src="imagenes/astronails.jpg" alt="Diseño de Uñas Angeles Studio" class="rounded-[32px] w-full object-cover aspect-[4/5] shadow-inner" onerror="this.src='https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600'">
+                <div class="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-md border border-studio-50">
+                    <p class="text-[10px] uppercase font-bold tracking-widest text-studio-500">Promoción del mes</p>
+                    <h3 class="font-serif text-base font-bold text-studio-900 mt-0.5">Acrílicas (30% DESCUENTO)</h3>
+                    <p class="text-xs text-studio-600 mt-1">Solo a través de reservación.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogo" class="bg-white border-y border-studio-100 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-xl mx-auto mb-12 space-y-2">
+                <h2 class="font-serif text-3xl sm:text-4xl text-studio-900 font-bold">Nuestro Menú de Belleza</h2>
+                <p class="text-studio-600 text-sm">Selecciona tu estilo favorito y agenda tu cita en segundos.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-studio-50 p-6 rounded-3xl border border-studio-100 flex flex-col justify-between hover:shadow-md transition">
                     <div>
-                        <p class="text-xs text-studio-500 font-semibold uppercase tracking-wider">Total Reservas</p>
-                        <h3 id="stat-total" class="text-2xl font-bold text-studio-900">0</h3>
+                        <span class="text-xs font-bold uppercase tracking-widest text-studio-500">Tendencia</span>
+                        <h3 class="font-serif text-xl font-bold text-studio-900 mt-1">Astro Nails (Lunas & Estrellas)</h3>
+                        <p class="text-studio-600 text-xs mt-2 leading-relaxed">Diseño místico pintado a mano alzada con detalles dorados o plateados sobre base nude o de color.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-studio-200/60 flex items-center justify-between">
+                        <span class="text-xl font-bold text-studio-900">S/. 45.00</span>
+                        <button onclick="seleccionarServicio('Astro Nails (Lunas & Estrellas) - S/. 45.00'); window.location.hash='#reserva';" class="bg-studio-900 text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-black transition">Elegir</button>
                     </div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-studio-100 shadow-sm flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600"><i data-lucide="clock"></i></div>
+                <div class="bg-studio-50 p-6 rounded-3xl border border-studio-100 flex flex-col justify-between hover:shadow-md transition">
                     <div>
-                        <p class="text-xs text-studio-500 font-semibold uppercase tracking-wider">Citas Pendientes</p>
-                        <h3 id="stat-pendientes" class="text-2xl font-bold text-studio-900">0</h3>
+                        <span class="text-xs font-bold uppercase tracking-widest text-studio-500">Clásico Elegante</span>
+                        <h3 class="font-serif text-xl font-bold text-studio-900 mt-1">Uñas Jabón (Clean Look)</h3>
+                        <p class="text-studio-600 text-xs mt-2 leading-relaxed">Manicura impecable ultra brillante con tonos translúcidos que dan un aspecto de limpieza y lujo silencioso.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-studio-200/60 flex items-center justify-between">
+                        <span class="text-xl font-bold text-studio-900">S/. 30.00</span>
+                        <button onclick="seleccionarServicio('Uñas Jabón (Clean Look) - S/. 30.00'); window.location.hash='#reserva';" class="bg-studio-900 text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-black transition">Elegir</button>
                     </div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-studio-100 shadow-sm flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-600"><i data-lucide="check-circle"></i></div>
+                <div class="bg-studio-50 p-6 rounded-3xl border border-studio-100 flex flex-col justify-between hover:shadow-md transition">
                     <div>
-                        <p class="text-xs text-studio-500 font-semibold uppercase tracking-wider">Citas Confirmadas</p>
-                        <h3 id="stat-confirmadas" class="text-2xl font-bold text-studio-900">0</h3>
+                        <span class="text-xs font-bold uppercase tracking-widest text-studio-500">Efecto Especial</span>
+                        <h3 class="font-serif text-xl font-bold text-studio-900 mt-1">Efecto Aurora Chrome</h3>
+                        <p class="text-studio-600 text-xs mt-2 leading-relaxed">Acabado magnético tornasolado inspirado en las auroras boreales con polvos de cromo importados de alta gama.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-studio-200/60 flex items-center justify-between">
+                        <span class="text-xl font-bold text-studio-900">S/. 40.00</span>
+                        <button onclick="seleccionarServicio('Efecto Aurora Chrome - S/. 40.00'); window.location.hash='#reserva';" class="bg-studio-900 text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-black transition">Elegir</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="bg-white rounded-2xl border border-studio-100 shadow-sm overflow-hidden">
-                <div class="px-6 py-4 border-b border-studio-100 flex items-center justify-between flex-wrap gap-2">
-                    <h2 class="font-serif text-lg text-studio-900 font-bold">Registro General de Citas Virtuales</h2>
-                    <span class="text-xs text-studio-500 bg-studio-50 px-3 py-1 rounded-full border">Actualizado en tiempo real</span>
-                </div>
-                
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-studio-50 text-studio-700 text-xs font-bold uppercase border-b border-studio-100">
-                                <th class="p-4">Cliente</th>
-                                <th class="p-4">Servicio Solicitado</th>
-                                <th class="p-4">Fecha y Hora</th>
-                                <th class="p-4">Notas / Comentarios</th>
-                                <th class="p-4 text-center">Estado</th>
-                                <th class="p-4 text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-citas-cuerpo" class="divide-y divide-studio-100 text-sm">
-                            <tr>
-                                <td colspan="6" class="p-8 text-center text-studio-400">Conectando con la base de datos...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <section id="reserva" class="max-w-4xl mx-auto px-4 py-16">
+        <div class="bg-white p-8 rounded-[32px] shadow-xl border border-studio-100">
+            <div class="text-center max-w-md mx-auto mb-8 space-y-1">
+                <h2 class="font-serif text-2xl sm:text-3xl text-studio-900 font-bold">Reserva tu Turno Virtual</h2>
+                <p class="text-studio-600 text-xs">Completa los datos y asegura tu atención personalizada en el estudio.</p>
             </div>
-        </main>
-    </div>
-
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Tu configuración exacta de Firebase sacada de tu index.html
-        const firebaseConfig = {
-            apiKey: "AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U",
-            authDomain: "angeles-studio-66873.firebaseapp.com",
-            projectId: "angeles-studio-66873",
-            storageBucket: "angeles-studio-66873.firebasestorage.app",
-            messagingSenderId: "274123676470",
-            appId: "1:274123676470:web:f5736b02bbf641f6be3197",
-            measurementId: "G-PZ2X5BGW5N"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let desvincularListener = null;
-
-        // Monitorear si el usuario está logueado de verdad por Firebase
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                // Verificar si tiene el rol en la base de datos
-                try {
-                    const docRef = doc(db, "personal", user.email);
-                    const docSnap = await getDoc(docRef);
-                    
-                    if (docSnap.exists() && (docSnap.data().rol === 'admin' || docSnap.data().rol === 'trabajadora')) {
-                        activarVistaPanel(false); // Entra modo real
-                    } else {
-                        alert("Acceso denegado: Tu correo no está registrado como personal autorizado.");
-                        await signOut(auth);
-                    }
-                } catch (e) {
-                    // Si las reglas de Firebase bloquean la lectura antes de configurar los roles,
-                    // le avisamos pero dejamos que use el modo prueba local para desarrollo.
-                    console.log("Validación de rol omitida o requiere reglas configuradas.");
-                }
-            }
-        });
-
-        // Manejar el formulario de Login Real
-        document.getElementById('form-login').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
-            const pass = document.getElementById('login-password').value;
-
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (error) {
-                alert("Error al iniciar sesión: Verifica el correo y contraseña.");
-            }
-        });
-
-        // Función para el Modo de Prueba Temporal
-        window.entrarModoPrueba = function() {
-            activarVistaPanel(true); // Entra en modo de simulación
-        };
-
-        // Cambiar pantallas
-        function activarVistaPanel(esModoPrueba) {
-            document.getElementById('vista-login').classList.add('hidden');
-            document.getElementById('vista-panel').classList.remove('hidden');
-            
-            const tagModo = document.getElementById('tag-modo');
-            if (esModoPrueba) {
-                tagModo.textContent = "Modo de Prueba (Simulado)";
-                tagModo.className = "text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md w-max border border-amber-200";
-                cargarCitasSimuladas();
-            } else {
-                tagModo.textContent = "Conexión en Vivo (Firebase)";
-                tagModo.className = "text-[10px] text-green-600 bg-green-50 px-2 py-0.5 rounded-md w-max border border-green-200";
-                escucharCitasEnVivo();
-            }
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        }
-
-        // Cargar datos en vivo desde la colección 'reservas' de Firestore
-        function escucharCitasEnVivo() {
-            if (desvincularListener) desvincularListener();
-
-            desvincularListener = onSnapshot(collection(db, "reservas"), (snapshot) => {
-                const citas = [];
-                snapshot.forEach((doc) => {
-                    citas.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Ordenar por fecha de creación (las más nuevas arriba)
-                citas.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-                renderizarTabla(citas, false);
-            }, (error) => {
-                console.error("Error cargando base de datos:", error);
-                document.getElementById('tabla-citas-cuerpo').innerHTML = `
-                    <tr>
-                        <td colspan="6" class="p-8 text-center text-red-500 font-semibold">
-                            No se pudieron leer los datos de Firebase. Asegúrate de configurar las "Reglas de Firestore" en tu consola para permitir la lectura, o usa el "Modo de Prueba".
-                        </td>
-                    </tr>`;
-            });
-        }
-
-        // Cargar filas de mentira si entran en Modo Prueba
-        function cargarCitasSimuladas() {
-            const ejemplos = [
-                { id: "Alejandra_Perez-962224745", nombre: "Alejandra Pérez", telefono: "962224745", servicio: "Astro Nails (Lunas & Estrellas)", fecha: "2026-06-25", hora: "03:00 PM", comentarios: "Quiero base color morado oscuro por favor.", estado: "pendiente" },
-                { id: "Mariana_V-987654321", nombre: "Mariana V.", telefono: "987654321", servicio: "Uñas Jabón (Clean Look)", fecha: "2026-06-26", hora: "10:30 AM", comentarios: "Retiro de gel anterior necesario.", estado: "confirmada" },
-                { id: "Lucia_Gomez-955111222", nombre: "Lucía Gómez", telefono: "955111222", servicio: "Efecto Aurora Chrome", fecha: "2026-06-28", hora: "06:00 PM", comentarios: "", estado: "cancelada" }
-            ];
-            renderizarTabla(ejemplos, true);
-        }
-
-        // Pintar la lista en la pantalla
-        function renderizarTabla(citas, esSimulado) {
-            const cuerpo = document.getElementById('tabla-citas-cuerpo');
-            cuerpo.innerHTML = "";
-
-            if (citas.length === 0) {
-                cuerpo.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-studio-400">No hay ninguna reserva registrada aún.</td></tr>`;
-                actualizarContadores(0, 0, 0);
-                return;
-            }
-
-            let pendientes = 0;
-            let confirmadas = 0;
-
-            citas.forEach(cita => {
-                if (cita.estado === 'pendiente') pendientes++;
-                if (cita.estado === 'confirmada') confirmadas++;
-
-                const fila = document.createElement('tr');
-                fila.className = "hover:bg-studio-50/50 transition-colors";
-
-                // Definir colores del estado
-                let claseEstado = "bg-amber-50 text-amber-700 border-amber-200";
-                if (cita.estado === 'confirmada') claseEstado = "bg-green-50 text-green-700 border-green-200";
-                if (cita.estado === 'cancelada') claseEstado = "bg-red-50 text-red-700 border-red-200";
-
-                fila.innerHTML = `
-                    <td class="p-4 font-semibold text-studio-900">
-                        <div class="flex flex-col">
-                            <span>${cita.nombre || 'Sin nombre'}</span>
-                            <a href="https://wa.me/${cita.telefono}" target="_blank" class="text-xs text-studio-500 hover:underline flex items-center gap-0.5 mt-0.5">
-                                <i data-lucide="phone" class="w-3 h-3"></i> ${cita.telefono || ''}
-                            </a>
-                        </div>
-                    </td>
-                    <td class="p-4 text-studio-700 font-medium">${cita.servicio || '-'}</td>
-                    <td class="p-4 text-studio-800">
-                        <div class="flex flex-col">
-                            <span class="font-semibold">${cita.fecha || ''}</span>
-                            <span class="text-xs text-studio-500">${cita.hora || ''}</span>
-                        </div>
-                    </td>
-                    <td class="p-4 text-xs text-studio-600 max-w-xs italic">${cita.comentarios || '<span class="text-studio-300">Ninguno</span>'}</td>
-                    <td class="p-4 text-center">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${claseEstado} uppercase tracking-wider">
-                            ${cita.estado}
-                        </span>
-                    </td>
-                    <td class="p-4 text-center">
-                        <select onchange="cambiarEstadoCita('${cita.id}', this.value, ${esSimulado})" class="text-xs bg-white border border-studio-200 rounded-lg p-1.5 focus:outline-none focus:ring-1 focus:ring-studio-500 font-medium">
-                            <option value="pendiente" ${cita.estado === 'pendiente' ? 'selected' : ''}>Marcar Pendiente</option>
-                            <option value="confirmada" ${cita.estado === 'confirmada' ? 'selected' : ''}>Confirmar Cita</option>
-                            <option value="cancelada" ${cita.estado === 'cancelada' ? 'selected' : ''}>Cancelar Cita</option>
+            <form id="form-reserva" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-studio-800 mb-1">Nombre Completo</label>
+                        <input type="text" id="nombre" required placeholder="Ej. Mariana Pérez" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-studio-800 mb-1">Teléfono / WhatsApp</label>
+                        <input type="tel" id="telefono" required placeholder="Ej. 912345678" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-studio-800 mb-1">Servicio Deseado</label>
+                    <select id="servicio" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400 font-medium">
+                        <option value="">Selecciona un servicio de la lista</option>
+                        <option value="Astro Nails (Lunas & Estrellas) - S/. 45.00">Astro Nails (Lunas & Estrellas) - S/. 45.00</option>
+                        <option value="Uñas Jabón (Clean Look) - S/. 30.00">Uñas Jabón (Clean Look) - S/. 30.00</option>
+                        <option value="Efecto Aurora Chrome - S/. 40.00">Efecto Aurora Chrome - S/. 40.00</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-studio-800 mb-1">Fecha</label>
+                        <input type="date" id="fecha" required class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-studio-800 mb-1">Hora Disponible</label>
+                        <select id="hora" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400 font-medium">
+                            <option value="09:00 AM">09:00 AM</option>
+                            <option value="10:30 AM">10:30 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="03:00 PM">03:00 PM</option>
+                            <option value="04:30 PM">04:30 PM</option>
+                            <option value="06:00 PM">06:00 PM</option>
                         </select>
-                    </td>
-                `;
-                cuerpo.appendChild(fila);
-            });
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-studio-800 mb-1">Notas especiales (Opcional)</label>
+                    <textarea id="comentarios" rows="3" placeholder="¿Deseas diseño extra, retiro de acrílico anterior o alguna especificación?" class="w-full px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-bold py-3.5 rounded-xl transition shadow-md tracking-wider text-sm uppercase">
+                    Solicitar Cita Virtual
+                </button>
+            </form>
+        </div>
+    </section>
 
-            actualizarContadores(citas.length, pendientes, confirmadas);
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        }
+    <!-- PANEL: GESTIÓN DE HORARIOS (solo visible para staff) -->
+    <section id="panel-horarios" class="max-w-4xl mx-auto px-4 py-16">
+        <div class="bg-white p-8 rounded-[32px] shadow-xl border border-studio-100">
+            <h2 class="font-serif text-2xl sm:text-3xl text-studio-900 font-bold mb-1">Gestión de Horarios</h2>
+            <p class="text-studio-600 text-xs mb-6">Estos horarios son los que verán los clientes al reservar en la web pública.</p>
 
-        function actualizarContadores(total, pend, conf) {
-            document.getElementById('stat-total').textContent = total;
-            document.getElementById('stat-pendientes').textContent = pend;
-            document.getElementById('stat-confirmadas').textContent = conf;
-        }
+            <div id="lista-horarios-admin" class="flex flex-wrap gap-2 mb-6"></div>
 
-        // Cambiar estado en base de datos o simulación
-        window.cambiarEstadoCita = async function(id, nuevoEstado, esSimulado) {
-            if (esSimulado) {
-                alert(`[Modo Prueba] Cambiaste el estado de la cita a: ${nuevoEstado.toUpperCase()}.\nEn el modo real, esto se guardará automáticamente en Firebase.`);
-                return;
-            }
+            <div class="flex gap-3">
+                <input type="text" id="nuevo-horario" placeholder="Ej: 05:00 PM" class="flex-1 px-4 py-3 rounded-xl border border-studio-200 text-sm focus:outline-none focus:ring-2 focus:ring-studio-400">
+                <button onclick="agregarHorario()" class="bg-studio-600 hover:bg-studio-700 text-white font-bold px-6 rounded-xl text-sm">Agregar</button>
+            </div>
+        </div>
+    </section>
 
-            try {
-                const docRef = doc(db, "reservas", id);
-                await updateDoc(docRef, { estado: nuevoEstado });
-            } catch (e) {
-                alert("No tienes permisos suficientes en Firebase para modificar este documento. Revisa tus Reglas de Seguridad en Cloud Firestore.");
-            }
-        };
-
-        // Salir del panel
-        window.cerrarSesionPanel = async function() {
-            if (desvincularListener) desvincularListener();
-            await signOut(auth);
-            document.getElementById('vista-panel').classList.add('hidden');
-            document.getElementById('vista-login').classList.remove('hidden');
-        };
-
-// Control del Modal de Autenticación
-    let esLogin = false; // Por defecto inicia en modo Registro para clientas
-
-    window.abrirModalAuth = function() {
-        document.getElementById('modal-auth').classList.remove('hidden');
-    };
-
-    window.cerrarModalAuth = function() {
-        document.getElementById('modal-auth').classList.add('hidden');
-    };
-
-    window.conmutarAuth = function() {
-        esLogin = !esLogin;
-        const titulo = document.getElementById('auth-titulo');
-        const subtitulo = document.getElementById('auth-subtitulo');
-        const btnSubmit = document.getElementById('btn-auth-submit');
-        const switchTexto = document.getElementById('auth-switch-texto');
-        const btnSwitch = document.getElementById('btn-auth-switch');
-
-        if (esLogin) {
-            titulo.textContent = "Iniciar Sesión";
-            subtitulo.textContent = "Ingresa tus credenciales para acceder a tu cuenta.";
-            btnSubmit.textContent = "Ingresar";
-            switchTexto.textContent = "¿No tienes cuenta?";
-            btnSwitch.textContent = "Regístrate aquí";
-        } else {
-            titulo.textContent = "Crear tu Cuenta";
-            subtitulo.textContent = "Regístrate para obtener promociones exclusivas y gestionar tus citas.";
-            btnSubmit.textContent = "Registrarse Ahora";
-            switchTexto.textContent = "¿Ya tienes una cuenta?";
-            btnSwitch.textContent = "Iniciar Sesión";
-        }
-    };
-
-    window.procesarAuth = async function(event) {
-        event.preventDefault();
-        const email = document.getElementById('auth-email').value.trim();
-        const password = document.getElementById('auth-password').value;
-
-        // Lista de correos autorizados para las trabajadoras/administradoras de Angeles Studio
-        const correosStaff = [
-            "admin@angelesstudio.com",
-            "angeles@angelesstudio.com",
-            "trabajadora1@angelesstudio.com"
-        ];
-
-        // VALIDACIÓN DE RUTA AUTOMÁTICA
-        if (correosStaff.includes(email.toLowerCase())) {
-            alert("¡Acceso de Staff detectado! Redirigiendo al Panel de Control...");
-            cerrarModalAuth();
-            window.location.href = "admin.html";
-        } else {
-            // Flujo para Clientas comunes
-            if (esLogin) {
-                alert("¡Bienvenida de vuelta! Ahora puedes ver tus promociones aplicadas en el catálogo.");
-            } else {
-                alert("¡Registro exitoso! Has desbloqueado un 30% de descuento en Acrílicas para tu próxima reserva.");
-            }
-            cerrarModalAuth();
-        }
-    };
-
-    </script>
-
-<div id="modal-auth" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-studio-stone/60 backdrop-blur-sm hidden">
+    <div id="modal-auth" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-studio-stone/60 backdrop-blur-sm hidden">
         <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative border border-studio-100">
-            <button onclick="cerrarModalAuth()" class="absolute top-4 right-4 text-studio-500 hover:text-studio-900">
+            <button onclick="cerrarModalAuth()" class="absolute top-4 right-4 text-studio-500 hover:text-studio-900" aria-label="Cerrar">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             
@@ -479,6 +290,212 @@
             </div>
         </div>
     </div>
+
+
+
+    <footer id="nosotros" class="bg-studio-stone text-studio-100 py-12 border-t border-studio-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-4">
+                <h3 class="font-serif text-2xl font-bold text-white">Angeles Studio | Lima</h3>
+                <p class="text-studio-300 text-sm leading-relaxed max-w-sm">Atención exclusiva en Lima, Perú. Brindamos una experiencia relajante con los más altos estándares de bioseguridad para el cuidado integral de tus manos.</p>
+                <div class="flex flex-col gap-2 text-xs text-studio-400">
+                    <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-studio-400"></i> Ubicación céntrica - Lima, Perú</span>
+                    <span class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-studio-400"></i> Lun a Sáb: 09:00 AM - 08:00 PM</span>
+                </div>
+            </div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden shadow-md opacity-80 hover:opacity-100 transition duration-300 border border-studio-800">
+                <iframe src="https://www.google.com/maps/embed?pb=!11m14!1m12!1m3!1d15601.597654035616!2d-77.042793!3d-12.046374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2spe!4v1700000000000" class="w-full h-full border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar Iconos Lucide
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Control de Menú Móvil
+        const btnMenu = document.getElementById('btn-menu');
+        const menuMovil = document.getElementById('menu-movil');
+        if (btnMenu && menuMovil) {
+            btnMenu.addEventListener('click', () => {
+                menuMovil.classList.toggle('hidden');
+            });
+        }
+
+        
+
+        // Enlazar selección rápida del catálogo al formulario
+        window.seleccionarServicio = function(nombreServicioConPrecio) {
+            const selectElement = document.getElementById('servicio');
+            if (selectElement) {
+                selectElement.value = nombreServicioConPrecio;
+                console.log("Servicio seleccionado correctamente:", nombreServicioConPrecio);
+            }
+        }
+
+        // Control de Temas (Claro / Oscuro Místico)
+        window.toggleTheme = function() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark-mode');
+            try {
+                localStorage.setItem('angeles-theme', isDark ? 'dark' : 'light');
+            } catch (e) { }
+            const icon = document.getElementById('theme-mode-icon');
+            if (icon) {
+                icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }
+        }
+
+        window.loadTheme = function() {
+            try {
+                const savedTheme = localStorage.getItem('angeles-theme');
+                if (savedTheme === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                    const icon = document.getElementById('theme-mode-icon');
+                    if (icon) icon.setAttribute('data-lucide', 'sun');
+                }
+            } catch (e) { }
+        }
+        
+        window.onload = function() {
+            loadTheme();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+    </script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U",
+      authDomain: "angeles-studio-66873.firebaseapp.com",
+      projectId: "angeles-studio-66873",
+      storageBucket: "angeles-studio-66873.firebasestorage.app",
+      messagingSenderId: "274123676470",
+      appId: "1:274123676470:web:f5736b02bbf641f6be3197"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // --- Guardia de acceso: solo staff puede ver este panel ---
+    const CORREOS_STAFF = ["admin@angelesstudio.com", "angeles@angelesstudio.com", "trabajadora1@angelesstudio.com"];
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user || !CORREOS_STAFF.includes((user.email || '').toLowerCase())) {
+            window.location.href = "index.html";
+        } else {
+            cargarHorariosAdmin();
+        }
+    });
+
+    // Lógica del Modal
+    let esLogin = true;
+    window.abrirModalAuth = () => document.getElementById('modal-auth').classList.remove('hidden');
+    window.cerrarModalAuth = () => document.getElementById('modal-auth').classList.add('hidden');
+    
+    window.conmutarAuth = () => {
+        esLogin = !esLogin;
+        document.getElementById('auth-titulo').innerText = esLogin ? "Iniciar Sesión" : "Crear Cuenta";
+        document.getElementById('btn-auth-submit').innerText = esLogin ? "Ingresar" : "Registrarse";
+        document.getElementById('auth-switch-texto').innerText = esLogin ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?";
+    };
+
+    // Procesar Inicio de Sesión o Registro
+    document.getElementById('form-auth').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('auth-email').value.trim();
+        const password = document.getElementById('auth-password').value;
+        const correosStaff = ["admin@angelesstudio.com", "angeles@angelesstudio.com", "trabajadora1@angelesstudio.com"];
+
+        try {
+            if (esLogin) {
+                await signInWithEmailAndPassword(auth, email, password);
+                if (correosStaff.includes(email.toLowerCase())) {
+                    window.location.href = "admin.html"; // Redirige a la trabajadora
+                } else {
+                    alert("Sesión iniciada. Bienvenida a Angeles Studio.");
+                    window.cerrarModalAuth();
+                }
+            } else {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("Cuenta creada exitosamente. Ya puedes reservar con tus datos.");
+                window.cerrarModalAuth();
+            }
+        } catch (error) {
+            alert("Error de autenticación: Verifica tus datos.");
+            console.error(error);
+        }
+    });
+
+    // --- Gestión de Horarios (panel admin) ---
+    async function cargarHorariosAdmin() {
+        const contenedor = document.getElementById('lista-horarios-admin');
+        if (!contenedor) return;
+        try {
+            const snap = await getDoc(doc(db, 'configuracion', 'horarios'));
+            const lista = (snap.exists() && Array.isArray(snap.data().lista)) ? snap.data().lista : [];
+            renderizarHorariosAdmin(lista);
+        } catch (e) {
+            console.error("Error cargando horarios:", e);
+        }
+    }
+
+    function renderizarHorariosAdmin(lista) {
+        const contenedor = document.getElementById('lista-horarios-admin');
+        contenedor.innerHTML = '';
+        lista.forEach(h => {
+            const chip = document.createElement('span');
+            chip.className = "flex items-center gap-2 bg-studio-100 text-studio-800 px-3 py-1.5 rounded-full text-xs font-semibold";
+            chip.innerHTML = `${h} <button class="text-studio-600 hover:text-red-600 font-bold">&times;</button>`;
+            chip.querySelector('button').onclick = () => eliminarHorario(h);
+            contenedor.appendChild(chip);
+        });
+    }
+
+    window.agregarHorario = async function() {
+        const input = document.getElementById('nuevo-horario');
+        const valor = input.value.trim();
+        if (!valor) return;
+        try {
+            const ref = doc(db, 'configuracion', 'horarios');
+            const snap = await getDoc(ref);
+            const lista = (snap.exists() && Array.isArray(snap.data().lista)) ? snap.data().lista : [];
+            if (!lista.includes(valor)) lista.push(valor);
+            await setDoc(ref, { lista });
+            input.value = '';
+            renderizarHorariosAdmin(lista);
+        } catch (e) {
+            alert("No se pudo agregar el horario.");
+            console.error(e);
+        }
+    };
+
+    window.eliminarHorario = async function(hora) {
+        try {
+            const ref = doc(db, 'configuracion', 'horarios');
+            const snap = await getDoc(ref);
+            const lista = (snap.exists() && Array.isArray(snap.data().lista)) ? snap.data().lista : [];
+            const nuevaLista = lista.filter(h => h !== hora);
+            await setDoc(ref, { lista: nuevaLista });
+            renderizarHorariosAdmin(nuevaLista);
+        } catch (e) {
+            alert("No se pudo eliminar el horario.");
+            console.error(e);
+        }
+    };
+
+    // Código existente de reservas...
+    window.enviarReserva = async function(event) {
+        // ... (mantén tu función enviarReserva aquí intacta) ...
+    };
+</script>
 
 </body>
 </html>
