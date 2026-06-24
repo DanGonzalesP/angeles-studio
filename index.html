@@ -6,6 +6,7 @@
     <title>Angeles Studio | Especialistas en Uñas</title>
     <link rel="icon" type="image/png" href="imagenes/favicon-32x32.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- Lucide Icons para iconos modernos -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Configuración personalizada de fuentes y colores (Estilo Rosa Viejo / Místico) -->
@@ -176,129 +177,151 @@
 </head>
 <body class="bg-studio-50 font-sans text-studio-stone selection:bg-studio-200 selection:text-studio-900">
 
-    <!-- MENÚ DE NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-studio-100 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-16 md:h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex flex-col">
                     <span class="font-serif text-2xl tracking-widest text-studio-900 font-semibold">ANGELES</span>
                     <span class="text-xs tracking-[0.3em] text-studio-500 uppercase -mt-1">Studio</span>
                 </div>
-                <!-- Menú Escritorio -->
-<div class="hidden md:flex items-center space-x-8">
-    <a href="#inicio" class="text-studio-700 hover:text-studio-900 font-medium">Inicio</a>
-    <a href="#catalogo" class="text-studio-700 hover:text-studio-900 font-medium">Catálogo</a>
-    <a href="#resenas" class="text-studio-700 hover:text-studio-900 font-medium">Reseñas</a>
-    <a href="#nosotros" class="text-studio-700 hover:text-studio-900 font-medium">Ubicación</a>
-    <a href="#reserva" class="bg-studio-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-studio-700 transition flex items-center gap-2">
-    <i data-lucide="calendar" class="w-4 h-4"></i> Agendar Cita
-</a>
-    <button onclick="abrirModalAuth()" class="border border-studio-400 text-studio-800 px-3 py-1.5 rounded-full font-medium hover:bg-studio-100 transition flex items-center gap-1.5 text-xs">
-        <i data-lucide="user" class="w-3.5 h-3.5"></i> Iniciar Sesión
-    </button>
-</div>
-                <!-- Botón Menú Móvil -->
-                <div class="md:hidden">
-    <button id="btn-menu" class="text-studio-700">
-        <i data-lucide="menu" class="w-8 h-8"></i>
-    </button>
-</div>
-            </div>
-        </div>
-        <!-- Menú Desplegable Móvil -->
-        <div id="menu-movil" class="hidden md:hidden border-t border-studio-100 bg-white">
-    <div class="flex flex-col items-center space-y-4 py-4">
-        <a href="#inicio" class="text-studio-700 font-medium">Inicio</a>
-        <a href="#catalogo" class="text-studio-700 font-medium">Catálogo</a>
-        <a href="#resenas" class="text-studio-700 font-medium">Reseñas</a>
-        <a href="#nosotros" class="text-studio-700 font-medium">Ubicación</a>
-        <a href="#reserva" class="bg-studio-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-studio-700">Agendar Cita</a>
-        <button onclick="abrirModalAuth()" class="border border-studio-400 text-studio-800 px-4 py-2 rounded-full font-medium hover:bg-studio-100 transition flex items-center gap-1.5 text-sm">
-            <i data-lucide="user" class="w-4 h-4"></i> Iniciar Sesión
-        </button>
-        
-    </div>
-</div>
-    </nav>
 
-    <!-- SECCIÓN INICIO / HERO -->
-    <section id="inicio" class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-        <div class="absolute top-1/4 right-0 w-80 h-80 bg-studio-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div class="absolute bottom-1/4 left-10 w-96 h-96 bg-studio-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                <!-- Hamburguesa (solo visible en mobile) -->
+                <button id="btn-menu" class="md:hidden p-2 rounded-xl text-studio-700 hover:bg-studio-100 transition" aria-label="Abrir menú">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-studio-100 text-studio-700 tracking-wider uppercase">
-                        ✨ Especialistas en uñas y tendencias
-                    </span>
-                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-studio-900 leading-tight">
-                        La magia y elegancia que tus manos <span class="italic text-studio-600">merecen</span>
-                    </h1>
-                    <p class="text-lg text-studio-700 max-w-xl mx-auto lg:mx-0">
-                        En Angeles Studio nos especializamos exclusivamente en embellecer tus manos. Acabados impecables, duraderos y las últimas tendencias como el Clean Look y efectos especiales.
-                    </p>
-                    <div class="mt-10 flex flex-col items-center lg:items-start gap-4">
-    <a href="https://wa.me/51962224745?text=Hola,%20tengo%20una%20consulta" class="text-studio-600 font-semibold hover:underline flex items-center gap-2">
-        <i data-lucide="message-circle" class="w-5 h-5"></i> ¿Tienes consultas?
-    </a>
-</div>
+                <!-- Menú Escritorio y Laptops -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#inicio" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Inicio</a>
+                    <a href="#catalogo" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Catálogo</a>
+                    <a href="#resenas" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Reseñas</a>
+                    <a href="#nosotros" class="text-studio-700 hover:text-studio-900 font-medium transition text-sm">Ubicación</a>
+                    <button onclick="abrirModalAuth()" class="border border-studio-400 text-studio-800 px-3 py-1.5 rounded-full font-medium hover:bg-studio-100 transition flex items-center gap-1.5 text-xs">
+                        <i data-lucide="user" class="w-3.5 h-3.5"></i> Iniciar Sesión
+                    </button>
+                    <a href="#reserva" class="bg-studio-600 text-white px-4 py-2 rounded-full font-medium hover:bg-studio-700 transition flex items-center gap-1.5 text-xs shadow-md">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Agendar Cita
+                    </a>
+                    <button onclick="toggleTheme()" class="p-1.5 rounded-full hover:bg-studio-100 transition text-studio-700" aria-label="Cambiar tema">
+                        <i id="theme-mode-icon" data-lucide="moon" class="w-4 h-4"></i>
+                    </button>
                 </div>
-                <div class="lg:col-span-5 flex justify-center relative">
-                    <div class="relative w-80 h-[450px] sm:w-[350px] sm:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white transform hover:rotate-2 transition-transform duration-500">
-                        <!-- Imagen principal inspiradora del salón -->
-                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=600');"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-studio-900/60 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-6 left-6 right-6 p-4 glass hero-badge rounded-2xl border border-white/20">
-                            <p class="text-xs font-semibold text-studio-500 uppercase tracking-widest">Promoción del Mes</p>
-                            <h3 class="font-serif text-lg text-studio-900 font-bold"> Acrilicas (30% DESCUENTO)</h3>
-                            <p class="text-xs text-studio-700 mt-1">Solo a traves de reservación.</p>
-                        </div>
-                    </div>
-                    <button id="btn-toggle-theme" type="button" onclick="toggleTheme()" class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-studio-600 animate-bounce transition-transform duration-200 hover:-translate-y-0.5" aria-label="Cambiar tema">
-                        <i id="theme-mode-icon" data-lucide="moon" class="w-8 h-8"></i>
+            </div>
+
+            <!-- Menú Móvil desplegable (Corregido a distribución horizontal compacta) -->
+            <div id="menu-movil" class="hidden md:hidden pb-4 border-t border-studio-100 pt-3">
+                <!-- Enlaces alineados horizontalmente con flex-wrap -->
+                <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-center mb-3">
+                    <a href="#inicio" onclick="document.getElementById('menu-movil').classList.add('hidden')" class="px-2 py-1.5 text-studio-700 font-medium hover:text-studio-900 transition text-xs">Inicio</a>
+                    <a href="#catalogo" onclick="document.getElementById('menu-movil').classList.add('hidden')" class="px-2 py-1.5 text-studio-700 font-medium hover:text-studio-900 transition text-xs">Catálogo</a>
+                    <a href="#resenas" onclick="document.getElementById('menu-movil').classList.add('hidden')" class="px-2 py-1.5 text-studio-700 font-medium hover:text-studio-900 transition text-xs">Reseñas</a>
+                    <a href="#nosotros" onclick="document.getElementById('menu-movil').classList.add('hidden')" class="px-2 py-1.5 text-studio-700 font-medium hover:text-studio-900 transition text-xs">Ubicación</a>
+                </div>
+                
+                <!-- Botones de Acción y Tema en una sola línea integrada -->
+                <div class="flex items-center gap-2">
+                    <button onclick="abrirModalAuth(); document.getElementById('menu-movil').classList.add('hidden')" class="flex-1 border border-studio-400 text-studio-800 py-2 rounded-full font-medium text-xs text-center hover:bg-studio-100 transition">
+                        Iniciar Sesión
+                    </button>
+                    <a href="#reserva" onclick="document.getElementById('menu-movil').classList.add('hidden')" class="flex-1 bg-studio-600 text-white py-2 rounded-full font-medium text-xs text-center hover:bg-studio-700 transition shadow-md">
+                        Agendar Cita
+                    </a>
+                    <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-studio-100 transition text-studio-700 flex-shrink-0" aria-label="Cambiar tema">
+                        <i data-lucide="moon" class="w-4 h-4"></i>
                     </button>
                 </div>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- SECCIÓN DE NUESTRO COMPROMISO -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto space-y-4">
-                <h2 class="font-serif text-3xl sm:text-4xl text-studio-900">¿Por qué elegir Angeles Studio?</h2>
-                <p class="text-studio-600">Nos enfocamos en un solo arte para ofrecerte resultados excepcionales y una experiencia completamente personalizada.</p>
+<!-- SECCIÓN INICIO / HERO -->
+    <section id="inicio" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-4 md:py-24 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
+        <div class="flex-1 space-y-4 md:space-y-6 max-w-xl text-center md:text-left">
+            <div class="inline-flex items-center gap-2 bg-studio-100 text-studio-800 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase">
+                ✨ Especialistas en Uñas y Tendencias
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                <div class="p-8 rounded-3xl bg-studio-50 border border-studio-100 hover:shadow-lg transition-all duration-300">
-                    <div class="w-12 h-12 rounded-2xl bg-studio-200 flex items-center justify-center text-studio-700 mb-6">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-studio-900 mb-3">Salud y Cuidado Seguro</h3>
-                    <p class="text-studio-600">Técnicas profesionales y seguras de retiro y colocación. Cuidamos la integridad de tu uña natural.</p>
+            <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl text-studio-900 font-bold leading-tight">
+                La magia y elegancia que tus manos <span class="italic font-normal text-studio-600">merecen</span>
+            </h1>
+            <p class="text-studio-700 text-sm sm:text-lg leading-relaxed">
+                En Angeles Studio nos especializamos exclusivamente en embellecer tus manos. Acabados impecables, duraderos y las últimas tendencias como el Clean Look y efectos especiales.
+            </p>
+            
+            <!-- BOTONES EN UNA SOLA FILA EN CELULAR (CORREGIDO) -->
+            <div class="pt-2 flex flex-row items-center justify-center md:justify-start gap-2 sm:gap-4 w-full">
+                <!-- Botón Principal con texto en dos líneas en móvil -->
+                <a href="#reserva" class="flex-1 sm:flex-none bg-studio-600 text-white text-center py-2.5 px-3 sm:py-4 sm:px-8 rounded-2xl sm:rounded-full font-semibold hover:bg-studio-700 transition shadow-lg tracking-wide text-xs sm:text-base flex flex-col items-center justify-center min-h-[54px] sm:min-h-0">
+                    <span class="block sm:inline">Reservar mi</span>
+                    <span class="block sm:inline sm:ml-1">espacio ahora</span>
+                </a>
+                <!-- Botón Consultas a la par -->
+                <a href="https://wa.me/51900000000" target="_blank" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 border border-studio-200 sm:border-none text-studio-800 font-medium hover:text-studio-600 py-2.5 px-2 sm:py-3 sm:px-4 rounded-2xl transition text-xs sm:text-base min-h-[54px] sm:min-h-0">
+                    <i data-lucide="message-circle" class="w-4 h-4 text-green-600 flex-shrink-0"></i> 
+                    <span>¿Tienes consultas?</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- CONTENEDOR DEL CARRUSEL ÚNICO -->
+        <div class="flex-shrink-0 w-full md:w-auto sm:flex-1 relative max-w-sm md:max-w-md flex justify-center items-center h-[390px] sm:h-[480px] md:h-[550px] mx-auto mt-2 md:mt-0">
+            
+            <!-- TARJETA 3 (FONDO) -->
+            <div id="carrusel-card-3" onclick="rotarCarrusel('pos-3')" class="carrusel-card pos-3 absolute w-[75vw] sm:w-full max-w-sm bg-white p-3 md:p-4 rounded-[32px] md:rounded-[40px] shadow-xl border border-studio-100 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer z-10 scale-90 translate-x-12 -translate-y-8 rotate-6 opacity-60 hover:translate-x-14 hover:-translate-y-10">
+                <img id="promo3-img" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" alt="Promo" class="rounded-[24px] md:rounded-[32px] w-full object-cover aspect-[3/4] sm:aspect-[4/5] shadow-inner">
+                <div id="promo3-badge" class="absolute top-6 right-6 md:top-8 md:right-8 bg-studio-600 text-white w-12 h-12 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center shadow-lg transform rotate-12 hidden">
+                    <span id="promo3-desc" class="text-sm md:text-xl font-bold leading-none">-0%</span><span class="text-[7px] md:text-[8px] uppercase tracking-wider font-semibold">OFF</span>
                 </div>
-                <div class="p-8 rounded-3xl bg-studio-50 border border-studio-100 hover:shadow-lg transition-all duration-300">
-                    <div class="w-12 h-12 rounded-2xl bg-studio-200 flex items-center justify-center text-studio-700 mb-6">
-                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                <div class="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl shadow-md border border-studio-50">
+                    <p class="text-[9px] md:text-[10px] uppercase font-bold tracking-widest text-studio-500">Promoción</p>
+                    <h3 id="promo3-titulo" class="font-serif text-sm md:text-base font-bold text-studio-900 mt-0.5">Cargando...</h3>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="promo3-orig" class="text-xs text-studio-400 line-through hidden">S/. 0.00</span>
+                        <span id="promo3-final" class="text-sm font-bold text-studio-600 hidden">S/. 0.00</span>
                     </div>
-                    <h3 class="text-xl font-bold text-studio-900 mb-3">Últimas Tendencias</h3>
-                    <p class="text-studio-600">Desde el minimalismo del Clean Look hasta efectos complejos como Ojo de Gato, Chrome, Aurora y Nail Art en tendencia.</p>
-                </div>
-                <div class="p-8 rounded-3xl bg-studio-50 border border-studio-100 hover:shadow-lg transition-all duration-300">
-                    <div class="w-12 h-12 rounded-2xl bg-studio-200 flex items-center justify-center text-studio-700 mb-6">
-                        <i data-lucide="clock" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-studio-900 mb-3">Máxima Durabilidad</h3>
-                    <p class="text-studio-600">Nos olvidamos de los retoques de un solo día. Tus uñas se mantendrán perfectas, brillantes e impecables por semanas.</p>
+                    <button id="promo3-btn" class="mt-2 md:mt-3 w-full bg-studio-800 text-white text-[11px] md:text-xs font-bold py-2 rounded-xl transition shadow-sm hidden cursor-pointer">Reservar con Descuento</button>
                 </div>
             </div>
+
+            <!-- TARJETA 2 (MEDIO) -->
+            <div id="carrusel-card-2" onclick="rotarCarrusel('pos-2')" class="carrusel-card pos-2 absolute w-[75vw] sm:w-full max-w-sm bg-white p-3 md:p-4 rounded-[32px] md:rounded-[40px] shadow-xl border border-studio-100 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer z-20 scale-95 translate-x-6 -translate-y-4 rotate-3 opacity-80 hover:translate-x-8 hover:-translate-y-6">
+                <img id="promo2-img" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" alt="Promo" class="rounded-[24px] md:rounded-[32px] w-full object-cover aspect-[3/4] sm:aspect-[4/5] shadow-inner">
+                <div id="promo2-badge" class="absolute top-6 right-6 md:top-8 md:right-8 bg-studio-600 text-white w-12 h-12 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center shadow-lg transform rotate-12 hidden">
+                    <span id="promo2-desc" class="text-sm md:text-xl font-bold leading-none">-0%</span><span class="text-[7px] md:text-[8px] uppercase tracking-wider font-semibold">OFF</span>
+                </div>
+                <div class="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl shadow-md border border-studio-50">
+                    <p class="text-[9px] md:text-[10px] uppercase font-bold tracking-widest text-studio-500">Promoción</p>
+                    <h3 id="promo2-titulo" class="font-serif text-sm md:text-base font-bold text-studio-900 mt-0.5">Cargando...</h3>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="promo2-orig" class="text-xs text-studio-400 line-through hidden">S/. 0.00</span>
+                        <span id="promo2-final" class="text-sm font-bold text-studio-600 hidden">S/. 0.00</span>
+                    </div>
+                    <button id="promo2-btn" class="mt-2 md:mt-3 w-full bg-studio-800 text-white text-[11px] md:text-xs font-bold py-2 rounded-xl transition shadow-sm hidden cursor-pointer">Reservar con Descuento</button>
+                </div>
+            </div>
+
+            <!-- TARJETA 1 (FRENTE) -->
+            <div id="carrusel-card-1" onclick="rotarCarrusel('pos-1')" class="carrusel-card pos-1 absolute w-[75vw] sm:w-full max-w-sm bg-white p-3 md:p-4 rounded-[32px] md:rounded-[40px] shadow-xl border border-studio-100 overflow-hidden transition-all duration-700 ease-in-out z-30 scale-100 translate-x-0 translate-y-0 rotate-0 opacity-100 cursor-default">
+                <img id="promo1-img" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" alt="Promo" class="rounded-[24px] md:rounded-[32px] w-full object-cover aspect-[3/4] sm:aspect-[4/5] shadow-inner">
+                <div id="promo1-badge" class="absolute top-6 right-6 md:top-8 md:right-8 bg-studio-600 text-white w-12 h-12 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center shadow-lg transform rotate-12 hidden">
+                    <span id="promo1-desc" class="text-sm md:text-xl font-bold leading-none">-0%</span><span class="text-[7px] md:text-[8px] uppercase tracking-wider font-semibold">OFF</span>
+                </div>
+                <div class="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl shadow-md border border-studio-50">
+                    <p class="text-[9px] md:text-[10px] uppercase font-bold tracking-widest text-studio-500">Promoción</p>
+                    <h3 id="promo1-titulo" class="font-serif text-sm md:text-base font-bold text-studio-900 mt-0.5">Cargando...</h3>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="promo1-orig" class="text-xs text-studio-400 line-through hidden">S/. 0.00</span>
+                        <span id="promo1-final" class="text-sm font-bold text-studio-600 hidden">S/. 0.00</span>
+                    </div>
+                    <button id="promo1-btn" class="mt-2 md:mt-3 w-full bg-studio-800 text-white text-[11px] md:text-xs font-bold py-2 rounded-xl hover:bg-studio-900 transition shadow-sm hidden cursor-pointer">Reservar con Descuento</button>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <!-- SECCIÓN CATÁLOGO INTERACTIVO -->
-    <section id="catalogo" class="py-20">
+    <section id="catalogo" class="py-20 bg-studio-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div>
@@ -315,79 +338,12 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="lista-disenos">
-                <!-- Diseño 1: Astro Nails (Insignia de la marca con tu diseño místico de lunas y estrellas) -->
-<div class="diseno-card group bg-white rounded-3xl overflow-hidden border border-studio-100 shadow-sm hover:shadow-xl transition-all duration-300" data-categoria="mistico">
-    <div class="h-64 bg-studio-200 overflow-hidden relative">
-        <img src="imagenes/astronails.jpg" alt="Astro Nails (Lunas & Estrellas)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <span class="absolute top-4 left-4 bg-studio-800 text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">Místico</span>
-    </div>
-    <div class="p-6 space-y-3">
-        <h3 class="text-lg font-bold text-studio-900">Astro Nails (Lunas & Estrellas)</h3>
-        <p class="text-sm text-studio-600">Base Cat Eye (Ojo de gato magnético) en tonos mora con apliques metálicos tridimensionales de lunas y estrellas.</p>
-        <div class="flex items-center justify-between pt-2">
-            <span class="text-xl font-bold text-studio-900">S/. 45.00</span>
-            <a href="#reserva" onclick="window.seleccionarServicio('Astro Nails (Lunas & Estrellas)')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-</a>
-        </div>
-    </div>
+    <p id="catalogo-loading" class="col-span-full text-center text-studio-400 py-12 text-sm">Cargando catálogo...</p>
 </div>
-                <!-- Diseño 2 -->
-                <div class="diseno-card group bg-white rounded-3xl overflow-hidden border border-studio-100 shadow-sm hover:shadow-xl transition-all duration-300" data-categoria="clean">
-    <div class="h-64 bg-studio-200 overflow-hidden relative">
-        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=600" alt="Clean Look" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <span class="absolute top-4 left-4 bg-studio-600 text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">Clean Look</span>
-    </div>
-    <div class="p-6 space-y-3">
-        <h3 class="text-lg font-bold text-studio-900">Uñas Jabón (Clean Look)</h3>
-        <p class="text-sm text-studio-600">Manicura corta, impecable y pulida con bases nude de alto brillo translúcido.</p>
-        <div class="flex items-center justify-between pt-2">
-            <span class="text-xl font-bold text-studio-900">S/. 30.00</span>
-            <a href="#reserva" onclick="window.seleccionarServicio('Uñas Jabón (Clean Look)')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-</a>
-        </div>
-    </div>
-</div>
-                <!-- Diseño 3 -->
-                <div class="diseno-card group bg-white rounded-3xl overflow-hidden border border-studio-100 shadow-sm hover:shadow-xl transition-all duration-300" data-categoria="chrome">
-    <div class="h-64 bg-studio-200 overflow-hidden relative">
-        <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&q=80&w=600" alt="Aurora Chrome" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <span class="absolute top-4 left-4 bg-pink-600 text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">Chrome</span>
-    </div>
-    <div class="p-6 space-y-3">
-        <h3 class="text-lg font-bold text-studio-900">Efecto Aurora Chrome</h3>
-        <p class="text-sm text-studio-600">Esmaltado semipermanente frotado con polvo perla holográfica para un brillo tornasol.</p>
-        <div class="flex items-center justify-between pt-2">
-            <span class="text-xl font-bold text-studio-900">S/. 40.00</span>
-            <a href="#reserva" onclick="window.seleccionarServicio('Efecto Aurora Chrome')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-</a>
-        </div>
-    </div>
-</div>
-                <!-- Diseño 4 -->
-                <div class="diseno-card group bg-white rounded-3xl overflow-hidden border border-studio-100 shadow-sm hover:shadow-xl transition-all duration-300" data-categoria="nailart">
-    <div class="h-64 bg-studio-200 overflow-hidden relative">
-        <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&q=80&w=600" alt="Coquette Nails" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <span class="absolute top-4 left-4 bg-purple-600 text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">Nail Art</span>
-    </div>
-    <div class="p-6 space-y-3">
-        <h3 class="text-lg font-bold text-studio-900">Uñas Coquette Románticas</h3>
-        <p class="text-sm text-studio-600">Base rosa pastel con diseños de mini lazos pintados a mano alzada y detalles de perlas.</p>
-        <div class="flex items-center justify-between pt-2">
-            <span class="text-xl font-bold text-studio-900">S/. 50.00</span>
-            <a href="#reserva" onclick="window.seleccionarServicio('Uñas Coquette Románticas')" class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
-    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-</a>
-        </div>
-    </div>
-</div>
-            </div>
         </div>
     </section>
 
-    <section id="reserva" class="py-20 bg-studio-100">
+    <section id="reserva" class="py-16 md:py-20 bg-studio-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
                 <span class="text-studio-600 font-semibold tracking-wider uppercase text-sm">Reserva en 1 minuto</span>
@@ -395,7 +351,7 @@
                 <p class="text-studio-600">Elige tu estilo, selecciona el día y hora que mejor te acomode. Al confirmar, tu solicitud se enviará a nuestro WhatsApp para coordinar tu confirmación inmediata.</p>
             </div>
 
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-studio-200/50 p-8 sm:p-12">
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-studio-200/50 p-8 sm:p-12">
                 <form id="form-reserva" onsubmit="enviarReserva(event)" class="space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
@@ -411,13 +367,8 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-semibold text-studio-800 mb-2">Estilo de Uñas *</label>
-                            <select id="servicio" required class="w-full px-4 py-3 rounded-xl border border-studio-200 focus:outline-none focus:ring-2 focus:ring-studio-400 focus:border-transparent transition-all bg-white">
+                            <select id="servicio" required onchange="calcularTotal()" class="w-full px-4 py-3 rounded-xl border border-studio-200 focus:outline-none focus:ring-2 focus:ring-studio-400 focus:border-transparent transition-all bg-white">
                                 <option value="" disabled selected>Elige un estilo...</option>
-                                <option value="Astro Nails (Lunas & Estrellas)">Astro Nails (Lunas & Estrellas) - S/. 45.00</option>
-                                <option value="Uñas Jabón (Clean Look)">Uñas Jabón (Clean Look) - S/. 30.00</option>
-                                <option value="Efecto Aurora Chrome">Efecto Aurora Chrome - S/. 40.00</option>
-                                <option value="Uñas Coquette Románticas">Uñas Coquette Románticas - S/. 50.00</option>
-                                <option value="Manicura Semipermanente Clásica">Manicura Semipermanente Clásica - S/. 25.00</option>
                             </select>
                         </div>
                         <div>
@@ -433,27 +384,53 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-studio-800 mb-2">Comentarios o Detalles Adicionales</label>
-                        <textarea id="comentarios" rows="3" placeholder="¿Tienes algún color de preferencia, necesitas retiro de set anterior o quieres consultar algún diseño extra?" class="w-full px-4 py-3 rounded-xl border border-studio-200 focus:outline-none focus:ring-2 focus:ring-studio-400 focus:border-transparent transition-all"></textarea>
+                        <label class="block text-sm font-semibold text-studio-800 mb-2">¿Deseas incluir retiro de esmalte previo?</label>
+                        <div class="flex gap-4">
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="retiro" value="no" class="peer hidden" checked onchange="calcularTotal()">
+                                <div class="flex items-center justify-center p-3 border border-studio-200 rounded-xl bg-white text-studio-700 font-medium transition-all peer-checked:bg-studio-600 peer-checked:text-white peer-checked:border-studio-600 hover:bg-studio-50 peer-checked:hover:bg-studio-700 text-sm">
+                                    Sin retiro
+                                </div>
+                            </label>
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="retiro" value="si" class="peer hidden" onchange="calcularTotal()">
+                                <div class="flex items-center justify-center p-3 border border-studio-200 rounded-xl bg-white text-studio-700 font-medium transition-all peer-checked:bg-studio-600 peer-checked:text-white peer-checked:border-studio-600 hover:bg-studio-50 peer-checked:hover:bg-studio-700 text-sm">
+                                    Con retiro (+ S/. 10.00)
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
-                    <button type="submit" id="btn-submit-reserva" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-bold text-lg py-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
-                        <i data-lucide="message-circle" class="w-6 h-6"></i> Confirmar y enviar por WhatsApp
-                    </button>
+<!-- CONTENEDOR DE COMENTARIOS, TOTAL Y BOTÓN DE RESERVA -->
+        <div class="space-y-4 mt-6">
+
+                    <div>
+                <label class="block text-studio-900 font-semibold mb-2 text-sm md:text-base">
+                    Comentarios o Detalles Adicionales
+                </label>
+                <textarea id="indicaciones-adicionales" rows="3" placeholder="¿Tienes alguna indicación?" class="w-full px-4 py-3 rounded-2xl border border-studio-200 focus:outline-none focus:ring-2 focus:ring-studio-500 text-studio-800 text-sm md:text-base transition resize-none"></textarea>
+            </div>
+
+            <!-- RESUMEN DE PRECIOS -->
+            <div class="bg-studio-50/50 rounded-2xl p-4 border border-studio-100 flex items-center justify-between gap-4">
+                <div>
+                    <span class="block text-[11px] md:text-xs font-medium uppercase tracking-wider text-studio-500">Total</span>
+                    <span id="precio-total" class="text-base md:text-xl font-bold text-studio-900">S/. 0.00</span>
+                </div>
+                <div class="text-right">
+                    <span class="block text-[11px] md:text-xs font-medium text-studio-500">Separa tu cita hoy con el 10%</span>
+                    <span id="monto-adelanto" class="text-base md:text-xl font-bold text-studio-600">S/. 0.00</span>
+                </div>
+            </div>
+
+                    <button id="btn-enviar-reserva" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 tracking-wide cursor-pointer text-sm md:text-base">
+                <i data-lucide="message-circle" class="w-5 h-5 flex-shrink-0"></i>
+                <span>Separar mi cita</span>
+            </button>
                 </form>
             </div>
         </div>
     </section>
-<section id="resenas" class="py-16 bg-studio-50">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-serif text-studio-900 mb-8">Lo que dicen nuestras clientas</h2>
-        <div class="bg-white p-6 rounded-2xl shadow-sm border">
-            <p class="text-studio-700 italic text-lg">"La atención en Angeles Studio es increíble, mis uñas quedaron perfectas y el ambiente es muy relajante. ¡Totalmente recomendado!"</p>
-            <p class="mt-4 font-bold text-studio-600">— Mariana V.</p>
-        </div>
-    </div>
-</section>
-
 <section id="nosotros" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -492,13 +469,50 @@
         </div> </div>
 </section>
 
-    <!-- MODAL ÉXITO -->
-    <div id="modal-exito" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-studio-stone/60 backdrop-blur-sm hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl text-center space-y-5">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600 mx-auto"><i data-lucide="check" class="w-10 h-10"></i></div>
-            <h3 class="font-serif text-2xl font-bold text-studio-900">¡Reserva Registrada!</h3>
-            <p class="text-studio-600 text-sm">Tu solicitud de cita ha sido guardada en la base de datos interna. Ahora te redirigiremos a WhatsApp para enviar el mensaje con los detalles de confirmación automática.</p>
-            <button onclick="cerrarModalExito()" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-semibold py-3 rounded-xl transition-all">Continuar a WhatsApp</button>
+<section id="resenas" class="py-16 bg-studio-50">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-serif text-studio-900 mb-8">Lo que dicen nuestras clientas</h2>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+            <p class="text-studio-700 italic text-lg">"La atención en Angeles Studio es increíble, mis uñas quedaron perfectas y el ambiente es muy relajante. ¡Totalmente recomendado!"</p>
+            <p class="mt-4 font-bold text-studio-600">— Mariana V.</p>
+        </div>
+    </div>
+</section>
+
+    <!-- MODAL ÉXITO + QR -->
+    <div id="modal-exito" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-7 shadow-2xl text-center space-y-4 max-h-[95vh] overflow-y-auto">
+            <!-- Header -->
+            <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mx-auto">
+                <i data-lucide="calendar-check" class="w-8 h-8"></i>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-studio-900">¡Cita Pre-Agendada!</h3>
+            <p class="text-studio-600 text-sm leading-relaxed">
+                Envía los detalles por WhatsApp para recibir los datos de <strong>Yape / Plin</strong> y confirmar tu reserva con el adelanto del 10%.
+            </p>
+
+            <!-- Precio Adelanto -->
+            <div class="bg-studio-50 border border-studio-100 rounded-2xl p-3">
+                <p class="text-xs text-studio-500">Adelanto requerido (10%)</p>
+                <p id="modal-adelanto-precio" class="text-2xl font-bold text-studio-700">S/. 0.00</p>
+            </div>
+
+            <!-- QR CODE -->
+            <div>
+                <p class="text-xs text-studio-500 mb-2">Presenta este QR el día de tu cita</p>
+                <div id="qrcode-container" class="flex justify-center">
+                    <div id="qrcode" class="inline-block p-3 bg-white border-2 border-studio-200 rounded-2xl"></div>
+                </div>
+                <p id="reserva-id-display" class="text-xs text-studio-400 mt-2 font-mono"></p>
+            </div>
+
+            <!-- Botones -->
+            <button onclick="cerrarModalExito()" class="w-full bg-studio-600 hover:bg-studio-700 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-5 h-5"></i> Enviar detalles por WhatsApp
+            </button>
+            <button onclick="document.getElementById('modal-exito').classList.add('hidden')" class="w-full text-studio-500 hover:text-studio-700 text-sm py-1 transition-all">
+                Cerrar sin enviar
+            </button>
         </div>
     </div>
 
@@ -548,111 +562,145 @@
         </div>
     </div>
 
-    <footer class="bg-studio-stone text-white/80 py-8 text-center text-xs border-t border-white/5">
-        © 2026 Angeles Studio. Todos los derechos reservados.
+    <!-- PIE DE PÁGINA (FOOTER) -->
+    <footer class="bg-studio-900 text-studio-100 pt-12 pb-6 border-t border-studio-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-studio-800 text-center md:text-left">
+                
+                <!-- COLUMNA 1: SOBRE EL STUDIO -->
+                <div class="space-y-3">
+                    <span class="font-serif text-xl tracking-widest text-white font-semibold block">
+                        ANGELES <span class="font-sans font-light text-xs tracking-normal text-studio-400 uppercase block md:inline md:ml-1">Studio</span>
+                    </span>
+                    <p class="text-studio-300 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto md:mx-0">
+                        Especialistas en el cuidado y diseño de uñas. Creamos experiencias únicas para resaltar tu elegancia y estilo personal.
+                    </p>
+                </div>
+
+                <!-- COLUMNA 2: ENLACES RÁPIDOS -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider">Explorar</h4>
+                    <div class="flex flex-col md:flex-row gap-2 md:gap-4 justify-center md:justify-start text-xs sm:text-sm">
+                        <div class="flex flex-col gap-2">
+                            <a href="#inicio" class="text-studio-300 hover:text-white transition">Inicio</a>
+                            <a href="#catalogo" class="text-studio-300 hover:text-white transition">Catálogo</a>
+                        </div>
+                        <div class="flex flex-col gap-2 md:ml-4">
+                            <a href="#resenas" class="text-studio-300 hover:text-white transition">Reseñas</a>
+                            <a href="#nosotros" class="text-studio-300 hover:text-white transition">Ubicación</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider">Contacto</h4>
+                    <p class="text-studio-300 text-xs sm:text-sm">¿Tienes dudas? Escríbenos directamente</p>
+                    <div class="flex justify-center md:justify-start gap-4 pt-1">
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/51900000000" target="_blank" class="p-2 bg-studio-800 hover:bg-studio-700 rounded-full text-white transition-all shadow-sm flex items-center justify-center" aria-label="WhatsApp">
+                            <i data-lucide="message-circle" class="w-4 h-4 text-green-400"></i>
+                        </a>
+                        <!-- Instagram (Corregido con SVG directo) -->
+                        <a href="https://www.instagram.com/angelesstudio.pe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="p-2 bg-studio-800 hover:bg-studio-700 rounded-full text-white transition-all shadow-sm flex items-center justify-center" aria-label="Instagram">
+                            <svg class="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DERECHOS RESERVADOS CORREGIDO -->
+            <div class="pt-6 text-center text-xs text-studio-400">
+                <p>&copy; 2026 Angeles Studio. Todos los derechos reservados.</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- SDK DE FIREBASE (CONEXIÓN CON LA NUBE) -->
-    <script type="module">
+<script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // Reemplaza la línea del import de Firestore por esta:
+import { getFirestore, doc, setDoc, getDoc,
+         collection, onSnapshot, query, where, getDocs
+       } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         const firebaseConfig = {
-  apiKey: "AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U",
-  authDomain: "angeles-studio-66873.firebaseapp.com",
-  projectId: "angeles-studio-66873",
-  storageBucket: "angeles-studio-66873.firebasestorage.app",
-  messagingSenderId: "274123676470",
-  appId: "1:274123676470:web:f5736b02bbf641f6be3197",
-  measurementId: "G-PZ2X5BGW5N"
-};
+            apiKey: "AIzaSyCrRhRe-PLnPidzAeQe7fOq2RnuvXquR9U",
+            authDomain: "angeles-studio-66873.firebaseapp.com",
+            projectId: "angeles-studio-66873",
+            storageBucket: "angeles-studio-66873.firebasestorage.app",
+            messagingSenderId: "274123676470",
+            appId: "1:274123676470:web:f5736b02bbf641f6be3197",
+            measurementId: "G-PZ2X5BGW5N"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (e) { console.error(e); }
-        }
-        initAuth();
-
-        // --- Horarios dinámicos (gestionados desde admin.html) ---
-        window.renderizarHorarios = function(lista) {
-            const contenedor = document.getElementById('bloques-hora');
-            const inputHora = document.getElementById('hora-seleccionada');
-            if (!contenedor) return;
-            contenedor.innerHTML = '';
-            lista.forEach(h => {
-                const b = document.createElement('button');
-                b.type = "button"; b.textContent = h;
-                b.className = "btn-hora px-3 py-2 border border-studio-200 rounded-xl text-xs font-semibold bg-white text-studio-700";
-                b.onclick = () => {
-                    document.querySelectorAll('.btn-hora').forEach(x => { x.classList.remove('bg-studio-600', 'text-white'); x.classList.add('bg-white', 'text-studio-700'); });
-                    b.classList.add('bg-studio-600', 'text-white'); b.classList.remove('bg-white', 'text-studio-700');
-                    inputHora.value = h;
-                };
-                contenedor.appendChild(b);
-            });
-        };
-
-        const HORARIOS_DEFAULT = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
-
-        async function cargarHorariosPublico() {
-            try {
-                const snap = await getDoc(doc(db, 'configuracion', 'horarios'));
-                const lista = (snap.exists() && Array.isArray(snap.data().lista)) ? snap.data().lista : HORARIOS_DEFAULT;
-                window.renderizarHorarios(lista);
-            } catch (e) {
-                window.renderizarHorarios(HORARIOS_DEFAULT);
+        // 1. Monitoreo controlado de la sesión del usuario
+        // ESCUCHAR ESTADO DE LA SESIÓN SIN BUCLES
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("Usuario detectado:", user.email);
+        
+        const correosStaff = ["admin@angelesstudio.com", "danielgonzales200427@gmail.com"];
+        
+        // Verificamos de forma segura usando user.email
+        if (user.email && correosStaff.includes(user.email.toLowerCase())) {
+            // SOLO redirige si NO estás ya en la página admin.html
+            if (!window.location.pathname.includes('admin.html')) {
+                window.location.href = "admin.html";
             }
         }
-        cargarHorariosPublico();
+    }
+});
 
-        // --- Lógica de Autenticación (Auth Modal) ---
-        const EMAILS_STAFF = ["admin@angelesstudio.com"];
-        let modoLoginAuth = false; // false = registro, true = login
-
-        window.abrirModalAuth = function() {
+        // 2. Control de acciones del Modal de Autenticación
+        let esLogin = true;
+        
+        window.abrirModalAuth = () => {
             document.getElementById('modal-auth').classList.remove('hidden');
         };
-
-        window.cerrarModalAuth = function() {
+        
+        window.cerrarModalAuth = () => {
             document.getElementById('modal-auth').classList.add('hidden');
             document.getElementById('form-auth').reset();
         };
 
-        window.conmutarAuth = function() {
-            modoLoginAuth = !modoLoginAuth;
-            document.getElementById('auth-titulo').textContent = modoLoginAuth ? "Iniciar Sesión" : "Crear tu Cuenta";
-            document.getElementById('auth-subtitulo').textContent = modoLoginAuth ? "Ingresa con tu correo y contraseña." : "Regístrate para obtener promociones exclusivas y gestionar tus citas.";
-            document.getElementById('btn-auth-submit').textContent = modoLoginAuth ? "Ingresar" : "Registrarse Ahora";
-            document.getElementById('auth-switch-texto').textContent = modoLoginAuth ? "¿No tienes una cuenta?" : "¿Ya tienes una cuenta?";
-            document.getElementById('btn-auth-switch').textContent = modoLoginAuth ? "Regístrate aquí" : "Iniciar Sesión";
+        window.conmutarAuth = () => {
+            esLogin = !esLogin;
+            document.getElementById('auth-titulo').innerText = esLogin ? "Iniciar Sesión" : "Crear Cuenta";
+            document.getElementById('auth-subtitulo').innerText = esLogin ? "Ingresa con tu correo y contraseña." : "Regístrate para obtener promociones exclusivas y gestionar tus citas.";
+            document.getElementById('btn-auth-submit').innerText = esLogin ? "Ingresar" : "Registrarse Ahora";
+            document.getElementById('auth-switch-texto').innerText = esLogin ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?";
+            document.getElementById('btn-auth-switch').innerText = esLogin ? "Regístrate aquí" : "Iniciar Sesión";
         };
 
+        // Cambiamos el evento para que escuche la función unificada en el submit del formulario HTML
         window.procesarAuth = async function(event) {
             event.preventDefault();
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
+            const correosStaff = ["admin@angelesstudio.com", "danielgonzales200427@gmail.com"];
 
             try {
-                if (modoLoginAuth) {
+                if (esLogin) {
                     await signInWithEmailAndPassword(auth, email, password);
+                    if (correosStaff.includes(email.toLowerCase())) {
+                        window.location.href = "admin.html";
+                    } else {
+                        alert("Sesión iniciada correctamente.");
+                        window.cerrarModalAuth();
+                    }
                 } else {
                     await createUserWithEmailAndPassword(auth, email, password);
+                    alert("Cuenta creada con éxito.");
+                    window.cerrarModalAuth();
                 }
-
-                if (EMAILS_STAFF.includes(email.toLowerCase())) {
-                    window.location.href = "admin.html";
-                    return;
-                }
-
-                cerrarModalAuth();
             } catch (e) {
                 let mensaje = "Ocurrió un error al procesar tu solicitud.";
                 if (e.code === "auth/email-already-in-use") mensaje = "Ese correo ya está registrado. Intenta iniciar sesión.";
@@ -663,74 +711,465 @@
             }
         };
 
+        // 3. Horarios dinámicos públicos
+        window.renderizarHorarios = function(lista, ocupados = {}) {
+            const contenedor = document.getElementById('bloques-hora');
+            const inputHora = document.getElementById('hora-seleccionada');
+            if (!contenedor) return;
+            contenedor.innerHTML = '';
+            
+            // Si el horario seleccionado previamente ahora está ocupado, lo limpiamos
+            if (inputHora.value && ocupados[inputHora.value] >= 2) {
+                inputHora.value = '';
+            }
 
-        window.enviarReserva = async function(event) {
-            event.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const telefono = document.getElementById('telefono').value;
-            const servicio = document.getElementById('servicio').value;
-            const fecha = document.getElementById('fecha').value;
-            const hora = document.getElementById('hora-seleccionada').value;
-            const comentarios = document.getElementById('comentarios').value;
-
-            if (!hora) { mostrarAlertaError("Selecciona una hora."); return; }
-
-            try {
-                // Ruta corregida: simple y directa
-// Creamos un identificador único con Nombre-Teléfono (ej: Maria-987654321)
-        const idReserva = `${nombre.trim().replace(/\s+/g, '_')}-${telefono}`;
-
-        // Guardamos la reserva usando el ID personalizado en lugar del código aleatorio
-        await setDoc(doc(db, 'reservas', idReserva), {
-            nombre,
-            telefono,
-            servicio,
-            fecha,
-            hora,
-            comentarios,
-            estado: 'pendiente',
-            createdAt: new Date().toISOString()
-        });
-                window.datosWhatsApp = { nombre, telefono, servicio, fecha, hora, comentarios };
-                mostrarAlertaExito();
-            } catch (e) { mostrarAlertaError("Error de conexión."); }
+            lista.forEach(h => {
+                const count = ocupados[h] || 0;
+                const isLleno = count >= 2;
+                
+                const b = document.createElement('button');
+                b.type = "button"; 
+                b.textContent = isLleno ? h + ' (Lleno)' : h;
+                
+                if (isLleno) {
+                    b.className = "btn-hora px-3 py-2 border border-studio-200 rounded-xl text-xs font-semibold bg-gray-100 text-gray-400 cursor-not-allowed opacity-60";
+                    b.disabled = true;
+                } else {
+                    b.className = "btn-hora px-3 py-2 border border-studio-200 rounded-xl text-xs font-semibold bg-white text-studio-700 hover:bg-studio-50 transition-all";
+                    
+                    // Si ya estaba seleccionado, mantener estilo
+                    if (inputHora.value === h) {
+                        b.classList.add('bg-studio-600', 'text-white');
+                        b.classList.remove('bg-white', 'text-studio-700', 'hover:bg-studio-50');
+                    }
+                    
+                    b.onclick = () => {
+                        document.querySelectorAll('.btn-hora:not(:disabled)').forEach(x => { 
+                            x.classList.remove('bg-studio-600', 'text-white'); 
+                            x.classList.add('bg-white', 'text-studio-700', 'hover:bg-studio-50'); 
+                        });
+                        b.classList.add('bg-studio-600', 'text-white'); 
+                        b.classList.remove('bg-white', 'text-studio-700', 'hover:bg-studio-50');
+                        inputHora.value = h;
+                    };
+                }
+                contenedor.appendChild(b);
+            });
         };
 
-        window.mostrarAlertaExito = function() {
-            const modal = document.getElementById('modal-exito');
-            if (modal) {
-                modal.classList.remove('hidden');
+        const HORARIOS_DEFAULT = ["09:00 AM", "10:30 AM", "12:00 PM", "01:30 PM", "03:00 PM", "04:30 PM", "06:00 PM", "07:30 PM"];
+        let listaHorariosGlobal = HORARIOS_DEFAULT;
+
+        async function cargarHorariosPublico() {
+            try {
+                const snap = await getDoc(doc(db, 'configuracion', 'horarios'));
+                listaHorariosGlobal = (snap.exists() && Array.isArray(snap.data().lista)) ? snap.data().lista : HORARIOS_DEFAULT;
+                verificarDisponibilidad();
+            } catch (e) {
+                verificarDisponibilidad();
+            }
+        }
+        
+        async function verificarDisponibilidad() {
+            const fechaInput = document.getElementById('fecha');
+            if (!fechaInput) return;
+            const fechaSeleccionada = fechaInput.value;
+            
+            if (!fechaSeleccionada) {
+                window.renderizarHorarios(listaHorariosGlobal, {});
+                return;
+            }
+            
+            try {
+                const q = query(collection(db, 'reservas'), where("fecha", "==", fechaSeleccionada));
+                const snapshot = await getDocs(q);
+                
+                let ocupados = {};
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.hora) {
+                        ocupados[data.hora] = (ocupados[data.hora] || 0) + 1;
+                    }
+                });
+                
+                window.renderizarHorarios(listaHorariosGlobal, ocupados);
+            } catch (error) {
+                console.error("Error verificando disponibilidad:", error);
+                window.renderizarHorarios(listaHorariosGlobal, {});
+            }
+        }
+
+        // Escuchar cambios en el input de fecha
+        const fechaEl = document.getElementById('fecha');
+        if (fechaEl) {
+            fechaEl.addEventListener('change', verificarDisponibilidad);
+        }
+
+        cargarHorariosPublico();
+
+        async function renderizarPromo(promoKey, data) {
+            if (!data.disenoId || !data.descuento) return;
+            try {
+                const disenoSnap = await getDoc(doc(db, 'catalogo', data.disenoId));
+                if (disenoSnap.exists()) {
+                    const d = disenoSnap.data();
+                    const desc = parseInt(data.descuento);
+                    const precioOriginal = Number(d.precio);
+                    const precioFinal = precioOriginal - (precioOriginal * (desc / 100));
+                    
+                    const index = promoKey.replace('promo', ''); // 1, 2, 3
+
+                    const tituloEl = document.getElementById(`promo${index}-titulo`);
+                    const imgEl = document.getElementById(`promo${index}-img`);
+                    
+                    if (tituloEl) tituloEl.textContent = d.titulo;
+                    if (imgEl && d.imagen) imgEl.src = d.imagen;
+                    
+                    const badgeContainer = document.getElementById(`promo${index}-badge`);
+                    if (badgeContainer) badgeContainer.classList.remove('hidden');
+                    
+                    const descEl = document.getElementById(`promo${index}-desc`);
+                    if (descEl) descEl.textContent = `-${desc}%`;
+                    
+                    const spanOrig = document.getElementById(`promo${index}-orig`);
+                    if (spanOrig) {
+                        spanOrig.classList.remove('hidden');
+                        spanOrig.textContent = `S/. ${precioOriginal.toFixed(2)}`;
+                    }
+                    
+                    const spanFinal = document.getElementById(`promo${index}-final`);
+                    if (spanFinal) {
+                        spanFinal.classList.remove('hidden');
+                        spanFinal.textContent = `S/. ${precioFinal.toFixed(2)}`;
+                    }
+                    
+                    const btnReservar = document.getElementById(`promo${index}-btn`);
+                    if (btnReservar) {
+                        btnReservar.classList.remove('hidden');
+                        const titleWithPrice = `${d.titulo} - S/. ${precioOriginal.toFixed(2)}`;
+                        btnReservar.onclick = (e) => {
+                            e.stopPropagation(); 
+                            window.seleccionarServicio(titleWithPrice);
+                        };
+                    }
+                }
+            } catch(e) { console.error("Error renderizando", promoKey, e); }
+        }
+
+        async function cargarPromoPublico() {
+            try {
+                onSnapshot(doc(db, 'configuracion', 'promociones'), async (snap) => {
+                    if (snap.exists()) {
+                        const data = snap.data();
+                        if (data.promo1) await renderizarPromo('promo1', data.promo1);
+                        if (data.promo2) await renderizarPromo('promo2', data.promo2);
+                        if (data.promo3) await renderizarPromo('promo3', data.promo3);
+                    }
+                });
+            } catch (e) {
+                console.error("Error cargando promociones:", e);
+            }
+        }
+        cargarPromoPublico();
+
+        // ─── LÓGICA DE CARRUSEL 3D ──────────────────────────────────────────────────
+        window.rotarCarrusel = function(posClaseActual) {
+            // Si hacemos clic en pos-1 (la del frente), no pasa nada
+            if (posClaseActual === 'pos-1') return;
+
+            const tarjetas = document.querySelectorAll('.carrusel-card');
+            
+            // Mapeo actual de elementos por su posición
+            let e1, e2, e3;
+            tarjetas.forEach(t => {
+                if (t.classList.contains('pos-1')) e1 = t;
+                if (t.classList.contains('pos-2')) e2 = t;
+                if (t.classList.contains('pos-3')) e3 = t;
+            });
+
+            // Función para reasignar clases
+            const aplicarClase = (el, claseNueva) => {
+                el.classList.remove('pos-1', 'pos-2', 'pos-3');
+                
+                // Limpiar todas las clases tailwind de posición
+                el.classList.remove(
+                    'z-30', 'scale-100', 'translate-x-0', 'translate-y-0', 'rotate-0', 'opacity-100', 'cursor-default',
+                    'z-20', 'scale-95', 'translate-x-6', '-translate-y-4', 'rotate-3', 'opacity-80', 'cursor-pointer', 'hover:translate-x-8', 'hover:-translate-y-6',
+                    'z-10', 'scale-90', 'translate-x-12', '-translate-y-8', 'rotate-6', 'opacity-60', 'hover:translate-x-14', 'hover:-translate-y-10'
+                );
+
+                el.classList.add(claseNueva);
+
+                // Aplicar las clases correspondientes a la nueva posición
+                if (claseNueva === 'pos-1') {
+                    el.classList.add('z-30', 'scale-100', 'translate-x-0', 'translate-y-0', 'rotate-0', 'opacity-100', 'cursor-default');
+                } else if (claseNueva === 'pos-2') {
+                    el.classList.add('z-20', 'scale-95', 'translate-x-6', '-translate-y-4', 'rotate-3', 'opacity-80', 'cursor-pointer', 'hover:translate-x-8', 'hover:-translate-y-6');
+                } else if (claseNueva === 'pos-3') {
+                    el.classList.add('z-10', 'scale-90', 'translate-x-12', '-translate-y-8', 'rotate-6', 'opacity-60', 'cursor-pointer', 'hover:translate-x-14', 'hover:-translate-y-10');
+                }
+
+                // Actualizar su propio onclick para reflejar su nueva posición
+                el.setAttribute('onclick', `rotarCarrusel('${claseNueva}')`);
+            };
+
+            // Rotar (e2 fue clickeado -> e2 a pos1, e3 a pos2, e1 a pos3)
+            // (e3 fue clickeado -> e3 a pos1, e1 a pos2, e2 a pos3)
+            if (posClaseActual === 'pos-2') {
+                aplicarClase(e2, 'pos-1');
+                aplicarClase(e3, 'pos-2');
+                aplicarClase(e1, 'pos-3');
+            } else if (posClaseActual === 'pos-3') {
+                aplicarClase(e3, 'pos-1');
+                aplicarClase(e1, 'pos-2');
+                aplicarClase(e2, 'pos-3');
             }
         };
 
-       window.cerrarModalExito = function() {
-    document.getElementById('modal-exito').classList.add('hidden');
-    if (window.datosWhatsApp) {
-        const { nombre, telefono, servicio, fecha, hora, comentarios } = window.datosWhatsApp;
-        const txt = `¡Hola Angeles Studio! ✨ Deseo reservar una cita.\n\n📋 *Detalles de Reserva:*\n• *Cliente:* ${nombre}\n• *Celular:* ${telefono}\n• *Servicio:* ${servicio}\n• *Fecha:* ${fecha}\n• *Horario:* ${hora}\n${comentarios ? `• *Notas:* ${comentarios}` : ''}`;
-        window.open(`https://api.whatsapp.com/send?phone=51962224745&text=${encodeURIComponent(txt)}`, '_blank');
-        window.datosWhatsApp = null;
-    }
-
-
+        // ─── CATÁLOGO DINÁMICO DESDE FIRESTORE ───────────────────────────────────────
+const BADGE_CLASES = {
+    clean:   'bg-studio-600',
+    mistico: 'bg-studio-800',
+    chrome:  'bg-pink-600',
+    nailart: 'bg-purple-600'
 };
+const BADGE_ETIQUETAS = {
+    clean: 'Clean Look', mistico: 'Místico',
+    chrome: 'Chrome',    nailart: 'Nail Art'
+};
+
+function crearTarjetaDiseño(id, data) {
+    const badgeClase = BADGE_CLASES[data.categoria] || 'bg-studio-600';
+    const badgeLabel = BADGE_ETIQUETAS[data.categoria] || data.categoria;
+
+    const div = document.createElement('div');
+    div.className = 'diseno-card group bg-white rounded-3xl overflow-hidden border border-studio-100 shadow-sm hover:shadow-xl transition-all duration-300';
+    div.dataset.categoria = data.categoria;
+
+    div.innerHTML = `
+        <div class="h-64 bg-studio-200 overflow-hidden relative">
+            <img src="${data.imagen}" alt="${data.titulo}"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-4 left-4 ${badgeClase} text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">
+                ${badgeLabel}
+            </span>
+        </div>
+        <div class="p-6 space-y-3">
+            <h3 class="text-lg font-bold text-studio-900">${data.titulo}</h3>
+            <p class="text-sm text-studio-600">${data.descripcion}</p>
+            <div class="flex items-center justify-between pt-2">
+                <span class="text-xl font-bold text-studio-900">S/. ${Number(data.precio).toFixed(2)}</span>
+                <a href="#reserva"
+                    onclick="window.seleccionarServicio('${data.titulo.replace(/'/g, "\\'")} - S/. ${Number(data.precio).toFixed(2)}')"
+                    class="text-studio-600 hover:text-studio-800 font-bold text-sm flex items-center gap-1">
+                    Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    `;
+    return div;
+}
+
+function iniciarCatalogoDinamico() {
+    const contenedor = document.getElementById('lista-disenos');
+    const selectServicio = document.getElementById('servicio');
+    if (!contenedor) return;
+
+    onSnapshot(collection(db, 'catalogo'), (snap) => {
+        contenedor.innerHTML = '';
+        if (selectServicio) {
+            selectServicio.innerHTML = '<option value="" disabled selected>Elige un estilo...</option>';
+        }
+
+        if (snap.empty) {
+            contenedor.innerHTML = '<p class="col-span-full text-center text-studio-400 py-12 text-sm">No hay diseños disponibles aún.</p>';
+            return;
+        }
+
+        snap.forEach(documento => {
+            const d = documento.data();
+            const tarjeta = crearTarjetaDiseño(documento.id, d);
+            contenedor.appendChild(tarjeta);
+
+            if (selectServicio) {
+                const opt = document.createElement('option');
+                const priceNumber = Number(d.precio);
+                const titleWithPrice = `${d.titulo} - S/. ${priceNumber.toFixed(2)}`;
+                opt.value = titleWithPrice;
+                opt.textContent = titleWithPrice;
+                opt.setAttribute('data-precio', priceNumber);
+                selectServicio.appendChild(opt);
+            }
+        });
+
+        // Re-inicializar Lucide para los iconos dentro de las tarjetas nuevas
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        // Re-aplicar el filtro activo sin resetear al botón "Todos"
+        const filtroActivo = document.querySelector('.filtro-btn.active');
+        if (filtroActivo) {
+            const filtro = filtroActivo.dataset.filtro;
+            document.querySelectorAll('.diseno-card').forEach(tarjeta => {
+                if (filtro === 'todos' || filtro === tarjeta.dataset.categoria) {
+                    tarjeta.classList.remove('hidden');
+                } else {
+                    tarjeta.classList.add('hidden');
+                }
+            });
+        }
+    }, (error) => {
+        console.error('Error escuchando catálogo:', error);
+        contenedor.innerHTML = '<p class="col-span-full text-center text-red-400 py-12 text-sm">Error al cargar el catálogo.</p>';
+    });
+}
+
+iniciarCatalogoDinamico();
+
+        window.calcularTotal = function() {
+            const select = document.getElementById('servicio');
+            const precioTotalUI = document.getElementById('precio-total-ui');
+            const precioAdelantoUI = document.getElementById('precio-adelanto-ui');
+            
+            let basePrice = 0;
+            if (select && select.selectedIndex >= 0) {
+                const option = select.options[select.selectedIndex];
+                basePrice = parseFloat(option.getAttribute('data-precio')) || 0;
+            }
+            
+            const retiroRadio = document.querySelector('input[name="retiro"]:checked');
+            const conRetiro = retiroRadio && retiroRadio.value === 'si';
+            
+            let total = basePrice;
+            if (conRetiro && basePrice > 0) total += 10.00;
+            
+            const adelanto = total > 0 ? Math.ceil(total * 0.10 * 10) / 10 : 0;
+            
+            if (precioTotalUI) precioTotalUI.textContent = `S/. ${total.toFixed(2)}`;
+            if (precioAdelantoUI) precioAdelantoUI.textContent = `S/. ${adelanto.toFixed(2)}`;
+            
+            // Actualizar tambien el modal
+            const modalAdelanto = document.getElementById('modal-adelanto-precio');
+            if (modalAdelanto) modalAdelanto.textContent = `S/. ${adelanto.toFixed(2)}`;
+        };
+
+        // 4. Gestión de Reservas
+        // Generador de ID corto legible (6 caracteres alfanuméricos en mayúsculas)
+        function generarIdCorto() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let id = '';
+            for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * chars.length)];
+            return id;
+        }
+
+        window.enviarReserva = async function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const servicio = document.getElementById('servicio').value;
+            const fecha = document.getElementById('fecha').value;
+            const hora = document.getElementById('hora-seleccionada').value;
+            const comentarios = document.getElementById('comentarios').value.trim();
+            
+            const retiroRadio = document.querySelector('input[name="retiro"]:checked');
+            const conRetiro = retiroRadio && retiroRadio.value === 'si';
+
+            if (!hora) { mostrarAlertaError("Por favor selecciona un horario disponible."); return; }
+
+            const select = document.getElementById('servicio');
+            let precioBase = 0;
+            if (select && select.selectedIndex >= 0) {
+                precioBase = parseFloat(select.options[select.selectedIndex].getAttribute('data-precio')) || 0;
+            }
+            const precioTotal = precioBase + (conRetiro ? 10 : 0);
+            const precioAdelanto = Math.ceil(precioTotal * 0.10 * 10) / 10;
+
+            try {
+                const idCorto = generarIdCorto();
+                const idReserva = `AS-${idCorto}`;
+                await setDoc(doc(db, 'reservas', idReserva), {
+                    idReserva,
+                    nombre,
+                    telefono,
+                    servicio,
+                    fecha,
+                    hora,
+                    comentarios,
+                    conRetiro,
+                    precioBase,
+                    precioTotal,
+                    precioAdelanto,
+                    estado: 'Pendiente',
+                    createdAt: new Date().toISOString()
+                });
+
+                window.datosWhatsApp = { idReserva, nombre, telefono, servicio, fecha, hora, comentarios, conRetiro, precioTotal, precioAdelanto };
+                mostrarModalQR(idReserva, precioAdelanto);
+
+                // Reset form
+                document.getElementById('form-reserva').reset();
+                document.getElementById('hora-seleccionada').value = '';
+                window.calcularTotal();
+            } catch (e) {
+                console.error(e);
+                mostrarAlertaError("Error de conexión al guardar la reserva. Inténtalo de nuevo.");
+            }
+        };
+
+        window.mostrarModalQR = function(idReserva, precioAdelanto) {
+            const modal = document.getElementById('modal-exito');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+
+            // Actualizar precio adelanto en modal
+            const modalAdelanto = document.getElementById('modal-adelanto-precio');
+            if (modalAdelanto) modalAdelanto.textContent = `S/. ${precioAdelanto.toFixed(2)}`;
+
+            // Mostrar ID de reserva
+            const idDisplay = document.getElementById('reserva-id-display');
+            if (idDisplay) idDisplay.textContent = `Código de reserva: ${idReserva}`;
+
+            // Generar QR
+            const qrEl = document.getElementById('qrcode');
+            if (qrEl) {
+                qrEl.innerHTML = '';
+                try {
+                    new QRCode(qrEl, {
+                        text: idReserva,
+                        width: 160,
+                        height: 160,
+                        colorDark: '#6c3532',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } catch(e) {
+                    qrEl.innerHTML = `<p class="text-xs text-studio-500 p-4">${idReserva}</p>`;
+                }
+            }
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        };
+
+        window.cerrarModalExito = function() {
+            document.getElementById('modal-exito').classList.add('hidden');
+            if (window.datosWhatsApp) {
+                const { idReserva, nombre, telefono, servicio, fecha, hora, comentarios, conRetiro, precioTotal, precioAdelanto } = window.datosWhatsApp;
+                const retiroTxt = conRetiro ? 'Sí (+ S/. 10.00)' : 'No';
+                const txt = `¡Hola Angeles Studio! ✨ Quisiera confirmar mi pre-reserva.\n\n📋 *Detalles de Reserva:*\n• *Código:* ${idReserva}\n• *Cliente:* ${nombre}\n• *Celular:* ${telefono}\n• *Servicio:* ${servicio}\n• *Retiro previo:* ${retiroTxt}\n• *Fecha:* ${fecha}\n• *Horario:* ${hora}\n• *Total a pagar:* S/. ${precioTotal.toFixed(2)}\n• *Adelanto (10%):* S/. ${precioAdelanto.toFixed(2)}\n${comentarios ? `• *Notas:* ${comentarios}` : ''}\n\nPor favor envídame los datos de Yape/Plin para hacer el adelanto. 🙏`;
+                window.open(`https://api.whatsapp.com/send?phone=51962224745&text=${encodeURIComponent(txt)}`, '_blank');
+                window.datosWhatsApp = null;
+            }
+        };
 
         window.mostrarAlertaError = function(mensaje) {
             const modal = document.getElementById('modal-error');
             const textoError = document.getElementById('error-mensaje-texto');
-            if (textoError) {
-                textoError.textContent = mensaje;
-            }
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
+            if (textoError) textoError.textContent = mensaje;
+            if (modal) modal.classList.remove('hidden');
         };
 
         window.cerrarModalError = function() {
             const modal = document.getElementById('modal-error');
-            if (modal) {
-                modal.classList.add('hidden');
-            }
+            if (modal) modal.classList.add('hidden');
         };
     </script>
 
@@ -746,43 +1185,48 @@
     // 2. Horarios: ahora se cargan dinámicamente desde Firestore (ver cargarHorariosPublico)
 
     // 3. Filtrado del catálogo
-    const filtrosCatalogo = document.querySelectorAll('.filtro-btn');
-    const tarjetasCatalogo = document.querySelectorAll('.diseno-card');
+   // ─── FILTRADO CON DELEGACIÓN (reemplaza el bloque de filtros existente) ───────
+const filtrosCatalogo = document.querySelectorAll('.filtro-btn');
 
-    if (filtrosCatalogo.length && tarjetasCatalogo.length) {
-        filtrosCatalogo.forEach(boton => {
-            boton.addEventListener('click', () => {
-                const filtro = boton.dataset.filtro;
+filtrosCatalogo.forEach(boton => {
+    boton.addEventListener('click', () => {
+        const filtro = boton.dataset.filtro;
 
-                filtrosCatalogo.forEach(b => {
-                    b.classList.remove('bg-studio-600', 'text-white');
-                    b.classList.add('bg-white', 'text-studio-700');
-                });
-                boton.classList.add('bg-studio-600', 'text-white');
-                boton.classList.remove('bg-white', 'text-studio-700');
-
-                tarjetasCatalogo.forEach(tarjeta => {
-                    const categoria = tarjeta.dataset.categoria;
-                    if (filtro === 'todos' || filtro === categoria) {
-                        tarjeta.classList.remove('hidden');
-                    } else {
-                        tarjeta.classList.add('hidden');
-                    }
-                });
-            });
+        filtrosCatalogo.forEach(b => {
+            b.classList.remove('bg-studio-600', 'text-white');
+            b.classList.add('bg-white', 'text-studio-700');
         });
-    }
+        boton.classList.add('bg-studio-600', 'text-white');
+        boton.classList.remove('bg-white', 'text-studio-700');
+        // Activo para el re-filtrado al recargar snapshots
+        filtrosCatalogo.forEach(b => b.classList.remove('active'));
+        boton.classList.add('active');
 
+        // Filtra sobre el DOM actual (ya poblado por onSnapshot)
+        document.querySelectorAll('.diseno-card').forEach(tarjeta => {
+            if (filtro === 'todos' || filtro === tarjeta.dataset.categoria) {
+                tarjeta.classList.remove('hidden');
+            } else {
+                tarjeta.classList.add('hidden');
+            }
+        });
+    });
+});
    
     window.seleccionarServicio = function(nombreServicioConPrecio) {
         const selectElement = document.getElementById('servicio');
         if (selectElement) {
             selectElement.value = nombreServicioConPrecio;
             console.log("Servicio seleccionado correctamente:", nombreServicioConPrecio);
+            window.calcularTotal(); // trigger recalculation
+            const reservaSection = document.getElementById('reserva');
+            if (reservaSection) {
+                reservaSection.scrollIntoView({ behavior: 'smooth' });
+            }
         } else {
-            console.error("No se encontró el menú desplegable con id='servicio'");
+            console.error("El select '#servicio' no se encontró en el DOM.");
         }
-    }
+    };
 
     window.toggleTheme = function() {
         const html = document.documentElement;
